@@ -90,14 +90,18 @@ But this app aims to strike a balance between a clean, minimalist style and one 
 
 ## Schedule
 
-**Wed Jan. 25:** Finish first mvp
+**Thu Jan. 26:** Finish first mvp
 - [ ] Have one view with input and a word count tracking words typed
 - [ ] Track user’s daily word count and total word count
+
+![A screenshot of what a wireframe might look like for this first mvp.](https://i.imgur.com/wsraSxR.png)
 
 **Wed Feb. 1:** Have second mvp working
 - [ ] Be able to input writing goals (daily and set to a specific date)
 - [ ] Display daily word goal counter
 - [ ] Have a view to see progress on word count goals
+
+![A screenshot of what a wireframe might look like for this first mvp.](https://imgur.com/wizhG8g.png)
 
 **Wed Feb. 8:** Refactor necessary code + add features for third mvp
 - [ ] Add tag functionality for projects
