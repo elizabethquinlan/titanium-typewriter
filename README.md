@@ -81,11 +81,18 @@ But this app aims to strike a balance between a clean, minimalist style and one 
 - [ ] Link app and API together
 
 ## Data Model
+** Update as we go
 
 `User` has: `totalWc`, `dailyWc`, optional `Projects` (each with its own `projectName`, `dailyWc` and `totalWc`)
+
 `CalcTotalWC` function returns `totalWc`
-`DailyWC` model
-`TotalWC` model (where this has a one-to-many relationship with other data in the database, as it spans input from multiple days),
+
+`DailyWC` model*
+
+`TotalWC` model*
+
+*Have the attributes: `projectName`, `date` and `dailyWC`
+
 `wordCount` from each day stored in database
 
 ## Schedule
