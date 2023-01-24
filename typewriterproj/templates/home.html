@@ -14,11 +14,13 @@
 </head>
 
 <body>
-    <div>
-        <label for="w3review">Enter Text:</label>
-        <br/>  
-        <textarea onChange="" id="description" name="description" rows="10" cols="70"></textarea> 
-        <div id="countText">Total words: 0</div>
-      </div>
-</div>
+    <div id="app">
+
+        <!-- remember: Vue delimiters are [[ ]] -->
+        <label for="textbody">Enter Text:</label>
+        <br/>
+        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
+        <div>Total words: [[ dailyWC ]]</div>
+    </div>
+    </div>
 </body>
