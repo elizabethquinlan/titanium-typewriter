@@ -14,6 +14,7 @@
 </head>
 
 <body>
+
     <div id="app">
 
         <!-- remember: Vue delimiters are [[ ]] -->
@@ -21,6 +22,12 @@
         <br/>
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
+        <div class="shell">
+            <!-- hardcoded value that I have to take out -->
+            <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
+              <span>[[ progress ]]%</span>
+            </div>
+        </div>
     </div>
     </div>
 </body>
