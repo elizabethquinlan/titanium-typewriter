@@ -15,7 +15,7 @@ new Vue({
         projectName: '',
     },
     mounted() {
-        this.getWc(),
+        this.getWc(), // Testing that the get is working
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -34,6 +34,7 @@ new Vue({
             axios.post('/apis/v1/new/', {
                 'project_name': this.projectName,
                 'todays_wc': this.dailyWC,
+                // doesn't include date here because it is set to default atetime.date.today in models
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())

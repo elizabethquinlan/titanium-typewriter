@@ -24,6 +24,10 @@
         <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
         <div>Total words: [[ totalWord ]]</div>
+
+        <p>Message is: [[ projectName ]]</p>
+        <input v-model="projectName" placeholder="edit me" />
+
         <div class="shell">
             <!-- hardcoded value that I have to take out -->
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
