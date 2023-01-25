@@ -38,8 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # local apps
     'writingapp.apps.WritingappConfig',
+    # Add rest_framework and apis to installed apps
+    'apis.apps.ApisConfig',
+    # third-party apps
+    'rest_framework',
+    # 'corsheaders'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -115,12 +127,11 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
 # static directory for loading static folder
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
+    # Where static files are being served to and loaded from
+    # Path to static folder
     os.path.join(BASE_DIR, 'static'),
 ]
 

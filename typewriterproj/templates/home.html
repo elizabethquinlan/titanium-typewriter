@@ -1,23 +1,13 @@
-{% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include Vue via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="{% static 'js/app.js' %}" defer></script> <!-- include JS file -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-</head>
-
 <body>
 
+    {% extends 'base.html' %}
+
+    {% block title %}Home{% endblock %}
+
+    {% block content %}
     <div id="app">
 
-        <!-- remember: Vue delimiters are [[ ]] -->
+
         <label for="textbody">Enter Text:</label>
         <br/>
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
@@ -29,5 +19,14 @@
             </div>
         </div>
     </div>
-    </div>
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}!
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+    {% endif %}
+    {% endblock %}
+
+
 </body>

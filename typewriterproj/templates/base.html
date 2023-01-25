@@ -10,8 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Include Vue via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="{% static 'js/app.js' %}" defer></script> <!-- include JS file -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <!-- Include axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> <!-- stylesheet -->
+    <script src="{% static 'js/app.js' %}" defer></script> <!-- include JS file with relative path from static folder-->
     <!-- <script src="https://kit.fontawesome.com/0cc09580ea.js" crossorigin="anonymous"></script> -->
 </head>
 

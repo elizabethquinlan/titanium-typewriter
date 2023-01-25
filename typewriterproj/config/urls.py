@@ -21,4 +21,5 @@ urlpatterns = [
     path('writingapp/', include('writingapp.urls')),
     path('', include('writingapp.urls')),
     path("accounts/", include("django.contrib.auth.urls")), # for authorization
+    path('apis/v1/', include('apis.urls')), # For making calls to apis.
 ]

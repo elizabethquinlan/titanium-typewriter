@@ -3,13 +3,17 @@ new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        dailyWC: 0,
+        dailyWC: 1,
         // v-model to the textarea in html
         textArea: "",
         totalWord: 0,
         // TODO: Later become a user-submitted value
         dailyGoal: 130,
-        progress: null,
+        progress: 1,
+    },
+    mounted() {
+        this.getWc()
+        this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
         countText() {
@@ -19,6 +23,9 @@ new Vue({
             // length of totalCharacter becomes null and this throws type error
             this.dailyWC = this.totalWord.length
         },
+        getWc() {
+            axios.get('/apis/v1').then(response => this.dailyWC = response.data)
+        }
     },
     computed: {
         calcProgress() {
