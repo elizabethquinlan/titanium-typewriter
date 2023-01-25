@@ -8,10 +8,22 @@
     <div id="app">
 
 
+        <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
+            <li>
+                [[ wc.project_name ]]: [[ wc.todays_wc ]] words
+                written on [[ wc.date ]]
+            </li>
+        </ul>
+        
+
+        <button @click="addWc()">❌</button>
+
+        <!-- remember: Vue delimiters are [[ ]] -->
         <label for="textbody">Enter Text:</label>
         <br/>
-        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
+        <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
+        <div>Total words: [[ totalWord ]]</div>
         <div class="shell">
             <!-- hardcoded value that I have to take out -->
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">

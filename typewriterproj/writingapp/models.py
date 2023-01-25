@@ -1,10 +1,11 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 class DailyWc(models.Model):
-    project_name = models.CharField(max_length=200)
+    project_name = models.CharField(max_length=200, blank=True, default='')
     todays_wc = models.IntegerField()
-    date = models.DateField("today's date")
+    date = models.DateField("today's date", default=datetime.date.today)
 
     # Possibly change this later
     def __str__(self) -> str:

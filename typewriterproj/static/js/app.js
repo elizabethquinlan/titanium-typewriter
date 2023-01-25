@@ -4,15 +4,18 @@ new Vue({
     delimiters: ['[[', ']]'],
     data: {
         dailyWC: 1,
+        wordcounts: null,
         // v-model to the textarea in html
         textArea: "",
-        totalWord: 0,
+        totalWord: 0, // A list with each word as a string
         // TODO: Later become a user-submitted value
         dailyGoal: 130,
         progress: 1,
+        csrfToken: null,
+        projectName: '',
     },
     mounted() {
-        this.getWc()
+        this.getWc(),
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -24,8 +27,17 @@ new Vue({
             this.dailyWC = this.totalWord.length
         },
         getWc() {
-            axios.get('/apis/v1').then(response => this.dailyWC = response.data)
-        }
+            axios.get('/apis/v1').then(response => this.wordcounts = response.data)
+        },
+        addWc() {
+            // If it already exists, update existing one
+            axios.post('/apis/v1/new/', {
+                'project_name': this.projectName,
+                'todays_wc': this.dailyWC,
+            }, {
+                headers: { 'X-CSRFToken': this.csrfToken }
+            }).then(res => this.getWc())
+        } 
     },
     computed: {
         calcProgress() {

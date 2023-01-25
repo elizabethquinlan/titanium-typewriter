@@ -9,6 +9,7 @@ class WcView(generics.ListAPIView):
 
 
 class AddWc(generics.CreateAPIView):
+    # 
     serializer_class = DailyWcSerializer
 
 # class ListTodo(generics.ListCreateAPIView):
