@@ -1,4 +1,3 @@
-
 new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
@@ -6,7 +5,7 @@ new Vue({
         dailyWC: 1,
         wordcounts: null,
         // v-model to the textarea in html
-        textArea: "",
+        textArea: '',
         totalWord: 0, // A list with each word as a string
         // TODO: Later become a user-submitted value
         dailyGoal: 130,
@@ -34,11 +33,24 @@ new Vue({
             axios.post('/apis/v1/new/', {
                 'project_name': this.projectName,
                 'todays_wc': this.dailyWC,
+                'text_area': this.textArea,
                 // doesn't include date here because it is set to default atetime.date.today in models
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
-        } 
+        },
+        wcView() { //replace /apis/v1/${} with a coded path corresponding to the text area?
+            let textbox = document.getElementById('user-text')
+            let wcId = document.getElementById('wc_id').innerHTML
+            console.log(wcId)
+            axios.get(`/apis/v1/${wcId}`).then(
+                // params: id
+                    response => 
+                    {textbox.value = response.data.text_area
+                        console.log(response.data)
+                }
+            )
+        },
     },
     computed: {
         calcProgress() {

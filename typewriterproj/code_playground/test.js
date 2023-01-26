@@ -37,3 +37,11 @@ function getWordCount(str) {
     // return either matches or a wc of 0
     return matches ? matches.length : 0;
 }
+
+
+
+axios.get(`/apis/v1/${116}/`, {
+    headers: { 'X-CSRFToken': this.csrfToken }
+}).then(res => this.wordcounts = res.data)
+// When clicking on the corresponding date, it will populate the text box and word counter with that day's data
+axios.get('/apis/v1').then(response => this.wordcounts = response.data)

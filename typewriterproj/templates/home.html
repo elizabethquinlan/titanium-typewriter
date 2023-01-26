@@ -10,31 +10,44 @@
 
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
-                [[ wc.project_name ]]: [[ wc.todays_wc ]] words
-                written on [[ wc.date ]]
+                <span :csrftoken="csrfToken" :key="wc.id">
+                    <button @click="wcView()">Display</button>
+                    Project: [[ wc.project_name ]] [[ wc.todays_wc ]] words
+                    written on [[ wc.date ]]
+                    id: <span id="wc_id">[[ wc.id ]]</span>
+                    <!-- [[ wc.text_area ]] -->
+                </span>
             </li>
         </ul>
-        
 
-        <button @click="addWc()">❌</button>
+
+        <button @click="addWc()">✅</button>
+        
 
         <!-- remember: Vue delimiters are [[ ]] -->
         <label for="textbody">Enter Text:</label>
         <br/>
-        <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" name="user-text" rows="10" cols="70"></textarea> 
+        <!-- needs to have an endpoint that is just today's text blob. -->
+        <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
-        <div>Total words: [[ totalWord ]]</div>
+        [[ textArea ]]
 
-        <p>Message is: [[ projectName ]]</p>
-        <input v-model="projectName" placeholder="edit me" />
+        <p>[[ projectName ]]</p>
+        <input v-model="projectName" placeholder="add a tag..." />
 
+        <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
+        <p>Daily goal: [[ dailyGoal ]] words </p>
         <div class="shell">
-            <!-- hardcoded value that I have to take out -->
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
               <span>[[ progress ]]%</span>
             </div>
         </div>
+
+
     </div>
+
+
+
     {% if user.is_authenticated %}
     Hi {{ user.username }}!
     <p><a href="{% url 'logout' %}">Log Out</a></p>

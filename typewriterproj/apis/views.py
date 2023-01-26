@@ -3,7 +3,7 @@ from writingapp.models import DailyWc
 from .serializers import DailyWcSerializer
 
 # Create your views here.
-class WcView(generics.ListAPIView):
+class WcAPIView(generics.ListAPIView):
     queryset = DailyWc.objects.all()
     serializer_class = DailyWcSerializer
 
@@ -11,11 +11,7 @@ class WcView(generics.ListAPIView):
 class AddWc(generics.CreateAPIView):
     serializer_class = DailyWcSerializer
 
-# class ListTodo(generics.ListCreateAPIView):
-#     queryset = models.Todo.objects.all()
-#     serializer_class = TodoSerializer
 
-
-# class DetailTodo(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = models.Todo.objects.all()
-#     serializer_class = TodoSerializer
+class WcView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = DailyWc.objects.all()
+    serializer_class = DailyWcSerializer

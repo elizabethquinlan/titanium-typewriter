@@ -8,5 +8,7 @@ class DailyWcSerializer(serializers.ModelSerializer):
         fields = (
             'project_name',
             'todays_wc',
+            'text_area',
             'date',
+            'id',
         )
