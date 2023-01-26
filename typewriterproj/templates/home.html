@@ -11,11 +11,10 @@
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
-                    <button @click="wcView()">Display</button>
+                    <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
                     Project: [[ wc.project_name ]] [[ wc.todays_wc ]] words
                     written on [[ wc.date ]]
-                    id: <span id="wc_id">[[ wc.id ]]</span>
-                    <!-- [[ wc.text_area ]] -->
+                    id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                 </span>
             </li>
         </ul>
@@ -30,7 +29,7 @@
         <!-- needs to have an endpoint that is just today's text blob. -->
         <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
-        [[ textArea ]]
+        <!-- [[ textArea ]] -->
 
         <p>[[ projectName ]]</p>
         <input v-model="projectName" placeholder="add a tag..." />

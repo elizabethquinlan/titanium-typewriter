@@ -39,15 +39,13 @@ new Vue({
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
         },
-        wcView() { //replace /apis/v1/${} with a coded path corresponding to the text area?
-            let textbox = document.getElementById('user-text')
-            let wcId = document.getElementById('wc_id').innerHTML
-            console.log(wcId)
+        wcView(wcId) {
+            // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(
-                // params: id
                     response => 
-                    {textbox.value = response.data.text_area
-                        console.log(response.data)
+                    // TODO: add more later (such as project)
+                    {this.textArea = response.data.text_area
+                    this.dailyWC = response.data.todays_wc
                 }
             )
         },
