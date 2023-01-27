@@ -21,13 +21,14 @@
 
 
         <button @click="addWc()">✅</button>
+        <button @click="wcUpdate(136)">😋</button>
         
 
         <!-- remember: Vue delimiters are [[ ]] -->
         <label for="textbody">Enter Text:</label>
         <br/>
         <!-- needs to have an endpoint that is just today's text blob. -->
-        <textarea v-model="textArea" v-on:keydown="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
         <!-- [[ textArea ]] -->
 

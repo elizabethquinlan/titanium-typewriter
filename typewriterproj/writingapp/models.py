@@ -12,4 +12,4 @@ class DailyWc(models.Model):
 
     # Possibly change this later
     def __str__(self) -> str:
-        return f'You wrote {self.todays_wc} on {self.date} for {self.project_name}'
+        return f'You wrote {self.todays_wc} words on {self.date} for {self.project_name}'

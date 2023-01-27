@@ -4,14 +4,13 @@ new Vue({
     data: {
         dailyWC: 1,
         wordcounts: null,
-        // v-model to the textarea in html
-        textArea: '',
-        totalWord: 0, // A list with each word as a string
-        // TODO: Later become a user-submitted value
-        dailyGoal: 130,
+        textArea: '', // v-model to the textarea in html
+        totalWord: 0, // A list with each word as a string for counting words
+        dailyGoal: 130, // TODO: Later become a user-submitted value
         progress: 1,
         csrfToken: null,
-        projectName: '',
+        wcPk: '', // Change to whatever display button is. And then can be passed into wcUpdate
+        projectName: '', // TODO: Later become a user-submitted value
     },
     mounted() {
         this.getWc(), // Testing that the get is working
@@ -19,8 +18,7 @@ new Vue({
     },
     methods: {
         countText() {
-            // Determining what counts as a word based on regex
-            this.totalWord = this.textArea.match(/[\w\d\’\'-]+/gi);
+            this.totalWord = this.textArea.match(/[\w\d\’\'-]+/gi); // Determining what counts as a word based on regex
             // need to add in error handling for value that is less than 1
             // length of totalCharacter becomes null and this throws type error
             this.dailyWC = this.totalWord.length
@@ -33,13 +31,13 @@ new Vue({
             axios.post('/apis/v1/new/', {
                 'project_name': this.projectName,
                 'todays_wc': this.dailyWC,
-                'text_area': this.textArea,
-                // doesn't include date here because it is set to default atetime.date.today in models
+                'text_area': this.textArea
+                // doesn't include date here because it is set to default datetime.date.today in models
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
         },
-        wcView(wcId) {
+        wcView(wcId) { // passing wcId in as param
             // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(
                     response => 
@@ -49,6 +47,17 @@ new Vue({
                 }
             )
         },
+        wcUpdate(wcId) {
+            axios.put(`/apis/v1/${wcId}/`, {
+                'project_name': this.projectName,
+                'todays_wc': this.dailyWC,
+                'text_area': this.textArea
+            }, 
+            {
+                headers: { 'X-CSRFToken': this.csrfToken }
+            }).then(res => this.getWc())
+        }
+        //     path('<int:pk>/', WcView.as_view()),
     },
     computed: {
         calcProgress() {
