@@ -14,7 +14,7 @@ new Vue({
         projectName: '', // TODO: Later become a user-submitted value
     },
     mounted() {
-        this.getWc(), // Testing that the get is working
+        // this.getWc(), // Testing that the get is working
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -59,11 +59,19 @@ new Vue({
             }).then(res => this.getWc())
         },
         createUpdate() {
-            axios.get('/apis/v1/today/').then(response => response.data)
+            console.log("This was clicked")
+            axios.post('/apis/v1/today/', {
+            'project_name': this.projectName,
+            'todays_wc': this.dailyWC,
+            'text_area': this.textArea},
+                {headers: { 'X-CSRFToken': this.csrfToken }
+            }).catch(response => {
+                console.log(response)
+                console.log("This was clicked.....")
+                response.data
+            })
             // axios.post(`/apis/v1/today/`, {
             // API view and url
-            console.log(this.response)
-            console.log("This was clicked")
         }
     },
     computed: {
