@@ -7,9 +7,7 @@ class DailyWc(models.Model):
     todays_wc = models.IntegerField()
     # Save the text area each day so the user can access that page and see it.
     text_area = models.CharField(max_length=500000, blank=True, default='Text here.')
-    # text_input = save today's text input
     date = models.DateField("today's date", default=datetime.date.today)
 
-    # Possibly change this later
     def __str__(self) -> str:
         return f'You wrote {self.todays_wc} words on {self.date} for {self.project_name}'

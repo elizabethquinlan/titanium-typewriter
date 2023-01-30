@@ -19,10 +19,13 @@
             </li>
         </ul>
 
-
-        <button @click="addWc()">✅</button>
-        <button @click="wcUpdate(136)">😋</button>
+        [[ todaysDate ]]
         
+        <button @click="addWc()">Add wc ✅</button>
+        
+        <button @click="wcUpdate(136)">Update wc (currently hardcoded with certain id)(136)</button>
+        
+        <button @click="createUpdate()">This is the one that I will be working on</button>
 
         <!-- remember: Vue delimiters are [[ ]] -->
         <label for="textbody">Enter Text:</label>
@@ -31,18 +34,18 @@
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
         <!-- [[ textArea ]] -->
-
+        
         <p>[[ projectName ]]</p>
         <input v-model="projectName" placeholder="add a tag..." />
-
+        
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
         <p>Daily goal: [[ dailyGoal ]] words </p>
         <div class="shell">
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
-              <span>[[ progress ]]%</span>
+                <span>[[ progress ]]%</span>
             </div>
         </div>
-
+        
 
     </div>
 

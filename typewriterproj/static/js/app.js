@@ -3,6 +3,7 @@ new Vue({
     delimiters: ['[[', ']]'],
     data: {
         dailyWC: 1,
+        todaysDate: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
         wordcounts: null,
         textArea: '', // v-model to the textarea in html
         totalWord: 0, // A list with each word as a string for counting words
@@ -26,6 +27,16 @@ new Vue({
         getWc() {
             axios.get('/apis/v1').then(response => this.wordcounts = response.data)
         },
+        wcView(wcId) { // passing wcId in as param
+            // Populates the page with data corresponding to what is stored in database under the given id
+            axios.get(`/apis/v1/${wcId}`).then(
+                    response => 
+                    // TODO: add more later (such as project)
+                    {this.textArea = response.data.text_area
+                    this.dailyWC = response.data.todays_wc
+                }
+            )
+        },
         addWc() {
             // If it already exists, update existing one
             axios.post('/apis/v1/new/', {
@@ -37,27 +48,23 @@ new Vue({
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
         },
-        wcView(wcId) { // passing wcId in as param
-            // Populates the page with data corresponding to what is stored in database under the given id
-            axios.get(`/apis/v1/${wcId}`).then(
-                    response => 
-                    // TODO: add more later (such as project)
-                    {this.textArea = response.data.text_area
-                    this.dailyWC = response.data.todays_wc
-                }
-            )
-        },
         wcUpdate(wcId) {
             axios.put(`/apis/v1/${wcId}/`, {
                 'project_name': this.projectName,
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea
-            }, 
+            },
             {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
+        },
+        createUpdate() {
+            axios.get('/apis/v1/today/').then(response => response.data)
+            // axios.post(`/apis/v1/today/`, {
+            // API view and url
+            console.log(this.response)
+            console.log("This was clicked")
         }
-        //     path('<int:pk>/', WcView.as_view()),
     },
     computed: {
         calcProgress() {

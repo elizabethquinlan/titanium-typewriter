@@ -1,6 +1,7 @@
 
 from django.urls import path
-from .views import WcAPIView, AddWc, WcView
+from .views import AddWc, createUpdate, WcAPIView, WcView
+from apis import views
 
 urlpatterns = [
     # The list of all wordcounts will be at apis/v1/.
@@ -9,4 +10,5 @@ urlpatterns = [
     path('new/', AddWc.as_view()),
     # get, put, and delete and accessing via primary key (e.g. apis/v1/200)
     path('<int:pk>/', WcView.as_view()),
+    path('today/', createUpdate.as_view())
 ]
