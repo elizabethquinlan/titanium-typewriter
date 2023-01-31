@@ -10,11 +10,12 @@ new Vue({
         dailyGoal: 130, // TODO: Later become a user-submitted value
         progress: 1,
         csrfToken: null,
-        wcPk: '', // Change to whatever display button is. And then can be passed into wcUpdate
+        wcId: '', // Change to whatever display button is. And then can be passed into wcUpdate
         projectName: '', // TODO: Later become a user-submitted value
+        accessedToday: false // This is already set to False as default in the Models.py
     },
     mounted() {
-        // this.getWc(), // Testing that the get is working
+        this.getWc(), // Testing that the get is working
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -34,20 +35,24 @@ new Vue({
                     // TODO: add more later (such as project)
                     {this.textArea = response.data.text_area
                     this.dailyWC = response.data.todays_wc
+                    this.todaysDate = response.data.date
+                    this.wcId = response.data.id
+                    console.log(response.data)
                 }
             )
         },
-        addWc() {
-            // If it already exists, update existing one
-            axios.post('/apis/v1/new/', {
-                'project_name': this.projectName,
-                'todays_wc': this.dailyWC,
-                'text_area': this.textArea
-                // doesn't include date here because it is set to default datetime.date.today in models
-            }, {
-                headers: { 'X-CSRFToken': this.csrfToken }
-            }).then(res => this.getWc())
-        },
+        // addWc() {
+        //     axios.post('/apis/v1/new/', {
+        //         'project_name': this.projectName,
+        //         'todays_wc': this.dailyWC,
+        //         'text_area': this.textArea,
+        //         'date': this.todaysDate,
+        //         'accessed_today': true // Set to true for the boolean later.
+        //         // doesn't include date here because it is set to default datetime.date.today in models
+        //     }, {
+        //         headers: { 'X-CSRFToken': this.csrfToken }
+        //     }).then(res => this.getWc())
+        // },
         wcUpdate(wcId) {
             axios.put(`/apis/v1/${wcId}/`, {
                 'project_name': this.projectName,
@@ -58,18 +63,25 @@ new Vue({
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
         },
-        createUpdate() {
-            console.log("This was clicked")
-            axios.post('/apis/v1/today/', {
-            'project_name': this.projectName,
-            'todays_wc': this.dailyWC,
-            'text_area': this.textArea},
-                {headers: { 'X-CSRFToken': this.csrfToken }
-            }).catch(response => {
+        createUpdate(wcId) {
+            // If this is false AND it's today's date.
+            if (!this.accessedToday && this.todaysDate == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`) 
+            {axios.post('/apis/v1/new/', {
+                'project_name': this.projectName,
+                'todays_wc': this.dailyWC,
+                'text_area': this.textArea,
+                'date': this.todaysDate,
+                'accessed_today': true // Set to true for the boolean later.
+                // doesn't include date here because it is set to default datetime.date.today in models
+                // Some edgecase shit with loaded-in page that I need to work on
+            }, {
+                headers: { 'X-CSRFToken': this.csrfToken }
+            }).then(response => {
+                this.getWc()
                 console.log(response)
                 console.log("This was clicked.....")
-                response.data
-            })
+                console.log(response.data)
+            })} else console.log("Was accessed today ig")
             // axios.post(`/apis/v1/today/`, {
             // API view and url
         }

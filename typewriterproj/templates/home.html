@@ -12,20 +12,23 @@
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
                     <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
-                    Project: [[ wc.project_name ]] [[ wc.todays_wc ]] words
-                    written on [[ wc.date ]]
+                    <!-- [[ wc ]] -->
+                    Project: [[ wc.project_name ]] <br>
+                    written on [[ wc.date ]] <br>
+                    [[ wc.accessed_today ]]<br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
+                    <br>[[ wc.todays_wc ]] words
                 </span>
             </li>
         </ul>
 
-        [[ todaysDate ]]
+        [[ todaysDate ]]<br>
         
-        <button @click="addWc()">Add wc ✅</button>
+        <!-- <button @click="addWc()">Add wc ✅</button> -->
         
-        <button @click="wcUpdate(136)">Update wc (currently hardcoded with certain id)(136)</button>
+        <button @click="wcUpdate(wcId)">Update wc</button>
         
-        <button @click="createUpdate">This is the one that I will be working on</button>
+        <button @click="createUpdate(wcId)">This is the one that I will be working on</button>
 
         <!-- remember: Vue delimiters are [[ ]] -->
         <label for="textbody">Enter Text:</label>
@@ -33,6 +36,7 @@
         <!-- needs to have an endpoint that is just today's text blob. -->
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
+        <p>wc id: [[ wcId ]] </p>
         <!-- [[ textArea ]] -->
         
         <p>[[ projectName ]]</p>

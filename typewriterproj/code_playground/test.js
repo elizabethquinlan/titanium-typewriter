@@ -45,3 +45,25 @@ axios.get(`/apis/v1/${116}/`, {
 }).then(res => this.wordcounts = res.data)
 // When clicking on the corresponding date, it will populate the text box and word counter with that day's data
 axios.get('/apis/v1').then(response => this.wordcounts = response.data)
+
+
+createUpdate() {
+    // If this is false AND it's today's date.
+    if (!this.accessedToday && this.todaysDate == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`) 
+    {
+        // console.log(this.accessedToday)
+        console.log("This was clicked")
+        axios.post('/apis/v1/today/', {
+    'project_name': this.projectName,
+    'todays_wc': this.dailyWC,
+    'text_area': this.textArea},
+        {headers: { 'X-CSRFToken': this.csrfToken }
+    }).then(response => {
+        this.getWc()
+        console.log(response)
+        console.log("This was clicked.....")
+        console.log(response.data)
+    })} else console.log("Was accessed today ig")
+    // axios.post(`/apis/v1/today/`, {
+    // API view and url
+}

@@ -10,5 +10,6 @@ class DailyWcSerializer(serializers.ModelSerializer):
             'todays_wc',
             'text_area',
             'date',
+            'accessed_today',
             'id',
         )
