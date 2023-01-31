@@ -17,20 +17,6 @@ def createUpdate(request):
     return Response({"message": "Hello, world!"})
 
 
-# class createUpdate(APIView):
-#     def post(self, request, format=None):
-#         print("This runs.")
-#         serializer = DailyWcSerializer
-#         # <property object at 0x103002020>
-#         print(serializer.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             print("Status RIGHT HERE!!")
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # usernames = [project.project_name for project in DailyWc.objects.all()]
-        # words = "Here is a variable."
-        # return Response(words)
 
 
 class WcAPIView(generics.ListAPIView):

@@ -67,3 +67,27 @@ createUpdate() {
     // axios.post(`/apis/v1/today/`, {
     // API view and url
 }
+
+
+// addWc() {
+//     axios.post('/apis/v1/new/', {
+//         'project_name': this.projectName,
+//         'todays_wc': this.dailyWC,
+//         'text_area': this.textArea,
+//         'date': this.todaysDate,
+//         'accessed_today': true // Set to true for the boolean later.
+//         // doesn't include date here because it is set to default datetime.date.today in models
+//     }, {
+//         headers: { 'X-CSRFToken': this.csrfToken }
+//     }).then(res => this.getWc())
+// },
+// wcUpdate(wcId) {
+//     axios.put(`/apis/v1/${wcId}/`, {
+//         'project_name': this.projectName,
+//         'todays_wc': this.dailyWC,
+//         'text_area': this.textArea
+//     },
+//     {
+//         headers: { 'X-CSRFToken': this.csrfToken }
+//     }).then(res => this.getWc())
+// },
