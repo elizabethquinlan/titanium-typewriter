@@ -91,3 +91,5 @@ createUpdate() {
 //         headers: { 'X-CSRFToken': this.csrfToken }
 //     }).then(res => this.getWc())
 // },
+
+// todaysDate: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,

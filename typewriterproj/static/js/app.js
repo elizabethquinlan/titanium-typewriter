@@ -3,7 +3,7 @@ new Vue({
     delimiters: ['[[', ']]'],
     data: {
         dailyWC: 1,
-        todaysDate: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
+        todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
         wordcounts: null,
         textArea: '', // v-model to the textarea in html
         totalWord: 0, // A list with each word as a string for counting words
@@ -28,18 +28,14 @@ new Vue({
         getWc() {
             axios.get('/apis/v1').then(response => {
                     this.wordcounts = response.data
-                    // console.log(this.wordcounts)
                     // When the page mounts, filter down to date that is today's date.
-                    let todaysWC = this.wordcounts.filter(wc => wc.date == '2023-01-31') // Hard-coded becaaaauuuse I need to fix the date.
-                    // alert(todaysWC)
+                    let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
                     //  If such a thing exists and array isn't empty, update the variables on the page
-                    if (todaysWC.length > 0)
-                    {
+                    if (todaysWC.length > 0){
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
-                        // alert("Todays wordcount has a length.")
                         this.accessedToday = true
                     }
                 })
@@ -53,28 +49,24 @@ new Vue({
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
                     this.wcId = response.data.id
-                    console.log(response.data)
                 }
             )
         },
         createUpdate(wcId) {
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
-            if (!this.accessedToday && this.todaysDate == `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`) 
+            if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
                 'project_name': this.projectName,
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
                 // doesn't include date here because it is set to default datetime.date.today in models
-                // Some edgecase shit with loaded-in page that I need to work on
+                // Some edgecase stuff with loaded-in page that I need to work on
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(response => {
                 this.getWc()
-                // console.log(response)
-                // console.log("This was clicked.....")
-                // console.log(response.data)
             })} else 
             axios.put(`/apis/v1/${wcId}/`, {
                 'project_name': this.projectName,
@@ -84,9 +76,7 @@ new Vue({
             {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
-            console.log("Was accessed today ig")
-            // axios.post(`/apis/v1/today/`, {
-            // API view and url
+            console.log("Was accessed today.")
         }
     },
     computed: {
