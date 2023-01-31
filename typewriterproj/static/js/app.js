@@ -9,13 +9,14 @@ new Vue({
         totalWord: 0, // A list with each word as a string for counting words
         dailyGoal: 130, // TODO: Later become a user-submitted value
         progress: 1,
+        allWcs: 0,
         csrfToken: null,
         wcId: '', // Change to whatever display button is. And then can be passed into wcUpdate
         projectName: '', // TODO: Later become a user-submitted value
         accessedToday: false, // This is already set to False as default in the Models.py
     },
     mounted() {
-        this.getWc(), // Testing that the get is working
+        this.getWc()
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -30,6 +31,7 @@ new Vue({
                     this.wordcounts = response.data
                     // When the page mounts, filter down to date that is today's date.
                     let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
+                    this.allWcs = this.wordcounts.reduce((acc, wordcount) => acc + wordcount.todays_wc, 0);
                     //  If such a thing exists and array isn't empty, update the variables on the page
                     if (todaysWC.length > 0){
                         // Assigning the values to populate with the corresponding values.
