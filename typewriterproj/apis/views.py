@@ -9,8 +9,9 @@ from rest_framework.decorators import api_view
 
 
 class WcAPIView(generics.ListAPIView):
-    queryset = DailyWc.objects.all()
     serializer_class = DailyWcSerializer
+    def get_queryset(self):
+        return DailyWc.objects.filter(user=self.request.user) # django is aware of what user is logged in and so will only retrieve data for tha user.
 
 
 class AddWc(generics.CreateAPIView):

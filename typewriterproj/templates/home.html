@@ -14,15 +14,21 @@
                 <span :csrftoken="csrfToken" :key="wc.id">
                     <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
-                    Project: [[ wc.project_name ]] <br>
+                    <br>Project: [[ wc.project_name ]]<br>
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
                     [[ wc.accessed_today ]]<br>
-                    By: [[ wc.user ]]
+                    By: {{ user.username }}
                 </span>
             </li>
         </ul>
+
+        {{ todays_wc }}
+
+        {% for wc in user.wordcounts %}
+        [[ user.username ]]
+        {% endfor %}
 
         [[ todaysDate ]]<br>
         TOTAL WC: [[ allWcs ]]<br>

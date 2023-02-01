@@ -72,7 +72,7 @@ new Vue({
             })} else 
             axios.put(`/apis/v1/${wcId}/`, {
                 'project_name': this.projectName,
-                'todays_wc': this.dailyWC,
+                'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                 'text_area': this.textArea,
             },
             {
