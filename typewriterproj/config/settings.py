@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # local apps
     'writingapp.apps.WritingappConfig',
+    'accounts',
     # Add rest_framework and apis to installed apps
     'apis.apps.ApisConfig',
     # third-party apps
