@@ -1,0 +1,26 @@
+body {
+    background-color: rgb(119, 133, 137);
+    color: white;
+}
+
+.shell {
+    height: 20px;
+    width: 250px;
+    border: 1px solid #aaa;
+    border-radius: 13px;
+    padding: 3px;
+}
+  
+.bar {
+    background: linear-gradient(to right, #B993D6, #8CA6DB);
+    height: 20px;
+    width: 15px;
+    border-radius: 9px;
+}
+
+.bar span {
+    float: right;
+    padding: 4px 5px;
+    color: #fff;
+    font-size: 0.7em
+}

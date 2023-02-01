@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<body>
+    {% if request.user.is_authenticated %}
+    <div id="app">
+
+
+        <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
+            <li>
+                <span :csrftoken="csrfToken" :key="wc.id">
+                    <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
+                    <!-- [[ wc ]]<br> -->
+                    <br>Project: [[ wc.project_name ]]<br>
+                    written on [[ wc.date ]] <br>
+                    id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
+                    <br>[[ wc.todays_wc ]] words<br>
+                    [[ wc.accessed_today ]]<br>
+                    By: {{ user.username }}
+                </span>
+            </li>
+        </ul>
+
+        {{ todays_wc }}
+
+        {% for wc in user.wordcounts %}
+        [[ user.username ]]
+        {% endfor %}
+
+        [[ todaysDate ]]<br>
+        TOTAL WC: [[ allWcs ]]<br>
+        
+        <!-- <button @click="addWc()">Add wc ✅</button> -->
+        
+        <button @click="createUpdate(wcId)">This will update or create depending on params</button>
+
+        <!-- remember: Vue delimiters are [[ ]] -->
+        <label for="textbody">Enter Text:</label>
+        <br/>
+        <!-- needs to have an endpoint that is just today's text blob. -->
+        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+        <div>Total words: [[ dailyWC ]]</div>
+        <p>wc id: [[ wcId ]] </p>
+        <p>Accessed today? [[ accessedToday ]]</p>
+        
+        <p>[[ projectName ]]</p>
+        <input v-model="projectName" placeholder="add a tag..." />
+        
+        <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
+        <p>Daily goal: <input
+            type="text"
+            v-model="dailyGoal"
+            placeholder="Text"
+          /> words </p> <!-- If you want this to change every day, you have to have it attached to the Data Model-->
+        <div class="shell">
+            <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
+                <span>[[ progress ]]%</span>
+            </div>
+        </div>
+        {% endif %}
+
+        
+
+    </div>
+
+
+
+    {% if user.is_authenticated %}
+    Hi {{ user.username }}!
+    <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
+    <p><a href="{% url 'signup' %}"> Sign Up</a></p>
+    {% endif %}
+    {% endblock %}
+
+
+</body>
