@@ -13,4 +13,4 @@ class DailyWc(models.Model):
     accessed_today = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f'You wrote {self.todays_wc} words on {self.date} for {self.project_name}.'
+        return f'{self.user} wrote {self.todays_wc} words on {self.date} for Project {self.project_name}.'
