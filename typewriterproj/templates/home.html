@@ -37,13 +37,16 @@
         <div>Total words: [[ dailyWC ]]</div>
         <p>wc id: [[ wcId ]] </p>
         <p>Accessed today? [[ accessedToday ]]</p>
-        <!-- [[ textArea ]] -->
         
         <p>[[ projectName ]]</p>
         <input v-model="projectName" placeholder="add a tag..." />
         
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
-        <p>Daily goal: [[ dailyGoal ]] words </p>
+        <p>Daily goal: <input
+            type="text"
+            v-model="dailyGoal"
+            placeholder="Text"
+          /> words </p> <!-- If you want this to change every day, you have to have it attached to the Data Model-->
         <div class="shell">
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
                 <span>[[ progress ]]%</span>

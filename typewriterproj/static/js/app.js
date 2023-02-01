@@ -7,7 +7,7 @@ new Vue({
         wordcounts: null,
         textArea: '', // v-model to the textarea in html
         totalWord: 0, // A list with each word as a string for counting words
-        dailyGoal: 130, // TODO: Later become a user-submitted value
+        dailyGoal: 0, // User-submitted value v-modeled to html TODO: allow commas?????
         progress: 1,
         allWcs: 0,
         csrfToken: null,
@@ -84,7 +84,13 @@ new Vue({
     computed: {
         calcProgress() {
             // Calculates percentage of your progress toward goal
+            // TODO: add some sort of edgecase handling for if you go OVER the goal
             this.progress = Math.round(this.dailyWC/this.dailyGoal*100)
+            if (this.progress > this.dailyGoal && this.dailyGoal > 0) {
+                this.progress = 100
+            } else if (this.progress == 'Infinity') {
+                this.progress = 0
+            }
             return this.progress
         }
     }
