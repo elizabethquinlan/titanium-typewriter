@@ -6,6 +6,7 @@ class DailyWcSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyWc
         fields = (
+            'user',
             'project_name',
             'todays_wc',
             'text_area',

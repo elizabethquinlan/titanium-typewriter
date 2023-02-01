@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
 import datetime
 
 # Create your models here.
 class DailyWc(models.Model):
+    user = models.ForeignKey(User, default="", on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
     project_name = models.CharField(max_length=200, blank=True, default='')
     todays_wc = models.IntegerField()
     # Save the text area each day so the user can access that page and see it.

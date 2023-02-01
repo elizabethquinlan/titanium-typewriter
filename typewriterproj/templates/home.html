@@ -1,10 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
 <body>
-
-    {% extends 'base.html' %}
-
-    {% block title %}Home{% endblock %}
-
-    {% block content %}
+    {% if request.user.is_authenticated %}
     <div id="app">
 
 
@@ -17,7 +18,8 @@
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
-                    [[ wc.accessed_today ]]
+                    [[ wc.accessed_today ]]<br>
+                    By: [[ wc.user ]]
                 </span>
             </li>
         </ul>
@@ -52,6 +54,8 @@
                 <span>[[ progress ]]%</span>
             </div>
         </div>
+        {% endif %}
+
         
 
     </div>

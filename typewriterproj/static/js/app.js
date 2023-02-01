@@ -33,7 +33,7 @@ new Vue({
                     let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
                     this.allWcs = this.wordcounts.reduce((acc, wordcount) => acc + wordcount.todays_wc, 0);
                     //  If such a thing exists and array isn't empty, update the variables on the page
-                    if (todaysWC.length > 0){
+                    if (todaysWC.length > 0 && this.todaysDate == todaysWC[0].date){ // Other functions also call this function, so to keep this from running and filling all fields with today's text, this conditional checks and makes sure the data is really for the present day.
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
                         this.textArea = todaysWC[0].text_area

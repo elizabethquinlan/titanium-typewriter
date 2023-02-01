@@ -6,4 +6,5 @@ from . import views
 app_name = 'writingapp'
 urlpatterns = [
     path('', views.index, name='index'),
+    # path('<int:user_id>/', views.index, name='user_posts'),
 ]

@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import AddWc, createUpdate, WcAPIView, WcView
+from .views import AddWc, WcAPIView, WcView
 from apis import views
 
 urlpatterns = [
@@ -10,5 +10,4 @@ urlpatterns = [
     path('new/', AddWc.as_view()),
     # get, put, and delete and accessing via primary key (e.g. apis/v1/200)
     path('<int:pk>/', WcView.as_view()),
-    path('today/', createUpdate)
 ]
