@@ -103,8 +103,11 @@ new Vue({
         calcProgress() {
             // Calculates percentage of your progress toward goal
             // TODO: add some sort of edgecase handling for if you go OVER the goal
+            let calcProg = this.dailyWC/this.dailyGoal
+            // console.log(this.dailyWC/this.dailyGoal*100)
+            console.log(this.progress)
             this.progress = Math.round(this.dailyWC/this.dailyGoal*100)
-            if (this.progress > this.dailyGoal && this.dailyGoal > 0) {
+            if (calcProg > this.dailyGoal && this.dailyGoal > 0) {
                 this.progress = 100
             } else if (this.progress == 'Infinity') {
                 this.progress = 0
