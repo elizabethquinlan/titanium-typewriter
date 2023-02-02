@@ -18,14 +18,17 @@
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
-                    [[ wc.accessed_today ]]<br>
-                    [[ wc.daily_goal ]]<br>
+                    Accessed today? [[ wc.accessed_today ]]<br>
+                    Daily wc goal: [[ wc.daily_goal ]]<br>
                     By: {{ user.username }}
+                    [[ wc ]]
                 </span>
             </li>
         </ul>
 
-        <input type="text" value="{{ user.id }}" name="username" hidden>
+        
+
+        <input type="text" value="{{ user.id }}" name="userid" hidden>
         Username: {{ user }}<br>
         User ID: {{ user.id }}<br>
         
@@ -50,7 +53,8 @@
         <p>[[ projectName ]]</p>
         <input v-model="projectName" placeholder="add a tag..." />
         
-        <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
+        <!-- If user's daily goal has been finished, dailygoalcomplete=complete --><br>
+        [[ dailyGoal ]]
         <p>Daily goal: <input
             type="number"
             v-model="dailyGoal"

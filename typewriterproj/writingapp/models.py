@@ -12,7 +12,8 @@ class DailyWc(models.Model):
     date = models.DateField("today's date", default=datetime.date.today)
     accessed_today = models.BooleanField(default=False)
     daily_goal = models.IntegerField(default=0)
-    # daily_goal_
+    daily_goal_bool = models.BooleanField(default=False)
+    
     
 
     def __str__(self) -> str:
