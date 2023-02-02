@@ -19,21 +19,22 @@
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
                     [[ wc.accessed_today ]]<br>
+                    [[ wc.daily_goal ]]<br>
                     By: {{ user.username }}
                 </span>
             </li>
         </ul>
 
-        {{ todays_wc }}
-
-        {% for wc in user.wordcounts %}
-        [[ user.username ]]
-        {% endfor %}
+        <input type="text" value="{{ user.id }}" name="username" hidden>
+        Username: {{ user }}<br>
+        User ID: {{ user.id }}<br>
+        
+        <!-- {\{ user|json_script:'userobject' }} -->
+        
 
         [[ todaysDate ]]<br>
         TOTAL WC: [[ allWcs ]]<br>
         
-        <!-- <button @click="addWc()">Add wc ✅</button> -->
         
         <button @click="createUpdate(wcId)">This will update or create depending on params</button>
 
@@ -51,7 +52,7 @@
         
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
         <p>Daily goal: <input
-            type="text"
+            type="number"
             v-model="dailyGoal"
             placeholder="Text"
           /> words </p> <!-- If you want this to change every day, you have to have it attached to the Data Model-->

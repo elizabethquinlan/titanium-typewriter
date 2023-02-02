@@ -4,13 +4,16 @@ import datetime
 
 # Create your models here.
 class DailyWc(models.Model):
-    user = models.ForeignKey(User, default="", on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
     project_name = models.CharField(max_length=200, blank=True, default='')
-    todays_wc = models.IntegerField()
+    todays_wc = models.IntegerField(default=0)
     # Save the text area each day so the user can access that page and see it.
     text_area = models.CharField(max_length=500000, blank=True, default='Text here.')
     date = models.DateField("today's date", default=datetime.date.today)
     accessed_today = models.BooleanField(default=False)
+    daily_goal = models.IntegerField(default=0)
+    # daily_goal_
+    
 
     def __str__(self) -> str:
         return f'{self.user} wrote {self.todays_wc} words on {self.date} for Project {self.project_name}.'

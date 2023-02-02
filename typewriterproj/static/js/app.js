@@ -1,13 +1,18 @@
+const user = JSON.parse(document.getElementById("userobject"))
+console.log(user)
+
 new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
+        username: '',
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
         wordcounts: null,
         textArea: '', // v-model to the textarea in html
         totalWord: 0, // A list with each word as a string for counting words
         dailyGoal: 0, // User-submitted value v-modeled to html TODO: allow commas?????
+        dailyGoalComplete: false,
         progress: 1,
         allWcs: 0,
         csrfToken: null,
@@ -17,6 +22,7 @@ new Vue({
     },
     mounted() {
         this.getWc()
+        this.username = document.querySelector('input[name=username]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
     methods: {
@@ -27,6 +33,7 @@ new Vue({
             this.dailyWC = this.totalWord.length
         },
         getWc() {
+            // Retrieves a data model based on whatever day you want to view.
             axios.get('/apis/v1').then(response => {
                     this.wordcounts = response.data
                     // When the page mounts, filter down to date that is today's date.
@@ -38,7 +45,9 @@ new Vue({
                         this.wcId = todaysWC[0].id
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
+                        this.dailyGoalComplete = todaysWC[0].daily_goal_bool
                         this.accessedToday = true
+                        this.dailyGoal = todaysWC[0].daily_goal // Interesting...
                     }
                 })
         },
@@ -51,6 +60,8 @@ new Vue({
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
                     this.wcId = response.data.id
+                    this.dailyGoal = response.data.daily_goal
+                    this.dailyGoalComplete = response.data.daily_goal_bool
                 }
             )
         },
@@ -63,22 +74,27 @@ new Vue({
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
+                'user': this.username,
+                'accessed_today': this.accessedToday,
+                'daily_goal': this.dailyGoal,
+                // 'daily_goal_bool': this.dailyGoalComplete
                 // doesn't include date here because it is set to default datetime.date.today in models
-                // Some edgecase stuff with loaded-in page that I need to work on
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(response => {
                 this.getWc()
-            })} else 
-            axios.put(`/apis/v1/${wcId}/`, {
-                'project_name': this.projectName,
-                'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
-                'text_area': this.textArea,
-            },
-            {
+            })} else {
+                axios.put(`/apis/v1/${wcId}/`, {
+                    'user': this.username,
+                    'project_name': this.projectName,
+                    'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
+                    'text_area': this.textArea,
+                    'daily_goal': this.dailyGoal,
+                    // 'daily_goal_bool': this.dailyGoalComplete
+            }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
-            console.log("Was accessed today.")
+            console.log("Was accessed today.")}
         }
     },
     computed: {
