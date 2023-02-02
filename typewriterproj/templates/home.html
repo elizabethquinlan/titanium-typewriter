@@ -6,6 +6,7 @@
 
 <body>
     {% if request.user.is_authenticated %}
+    Hi {{ user.username }}!
     <div id="app">
 
 
@@ -14,29 +15,36 @@
                 <span :csrftoken="csrfToken" :key="wc.id">
                     <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
-                    <br>Project: [[ wc.project_name ]]<br>
+                    <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p>
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
                     Accessed today? [[ wc.accessed_today ]]<br>
                     Daily wc goal: [[ wc.daily_goal ]]<br>
                     By: {{ user.username }}
-                    [[ wc ]]
                 </span>
             </li>
         </ul>
 
-        
 
-        <input type="text" value="{{ user.id }}" name="userid" hidden>
-        Username: {{ user }}<br>
-        User ID: {{ user.id }}<br>
-        
-        <!-- {\{ user|json_script:'userobject' }} -->
-        
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn">Open Modal</button>
 
-        [[ todaysDate ]]<br>
-        TOTAL WC: [[ allWcs ]]<br>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Daily wordcount goal:</p>
+                <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                <p>Today's wc progress:</p>
+                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] words</p>
+                <p v-else>[[ dailyWC ]] words</p>
+                <p>Your total progress:</p>
+                <p>[[ allWcs ]] words</p>
+
+            </div>
+        </div>
         
         
         <button @click="createUpdate(wcId)">This will update or create depending on params</button>
@@ -47,14 +55,20 @@
         <!-- needs to have an endpoint that is just today's text blob. -->
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
         <div>Total words: [[ dailyWC ]]</div>
-        <p>wc id: [[ wcId ]] </p>
+
+        <input type="text" value="{{ user.id }}" name="userid" hidden>
+        Username: {{ user }}<br>
+        User ID: {{ user.id }}<br>
+        [[ todaysDate ]]<br>
+        TOTAL WC: [[ allWcs ]]<br>
+        <p>wc id: [[ wcId ]]</p>
         <p>Accessed today? [[ accessedToday ]]</p>
         
         <p>[[ projectName ]]</p>
         <input v-model="projectName" placeholder="add a tag..." />
         
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete --><br>
-        [[ dailyGoal ]]
+
         <p>Daily goal: <input
             type="number"
             v-model="dailyGoal"
@@ -74,7 +88,6 @@
 
 
     {% if user.is_authenticated %}
-    Hi {{ user.username }}!
     <p><a href="{% url 'logout' %}">Log Out</a></p>
     {% else %}
     <p>You are not logged in</p>
