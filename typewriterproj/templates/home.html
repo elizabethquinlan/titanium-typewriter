@@ -13,9 +13,11 @@
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
-                    <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
+                    <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
-                    <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p>
+                    <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
+                    [[ wc ]]
+                    Project: [[ wc.project ]]<br>
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
@@ -38,8 +40,8 @@
                 <p>Daily wordcount goal:</p>
                 <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
                 <p>Today's wc progress:</p>
-                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] words</p>
-                <p v-else>[[ dailyWC ]] words</p>
+                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
                 <p>Your total progress:</p>
                 <p>[[ allWcs ]] words</p>
 
@@ -64,8 +66,8 @@
         TOTAL WC: [[ allWcs ]]<br>
         <p>Accessed today? [[ accessedToday ]]</p>
         
-        <p>[[ projectName ]]</p>
-        <input v-model="projectName" placeholder="add a tag..." />
+        <!-- <p>[[ projectName ]]</p> -->
+        <!-- <input v-model="projectName" placeholder="add a tag..." /> -->
         
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete --><br>
 

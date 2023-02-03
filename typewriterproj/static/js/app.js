@@ -5,6 +5,7 @@ new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
+        projectId: 0, // This has to be user-submitted, too.
         username: '',
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
@@ -17,7 +18,6 @@ new Vue({
         allWcs: 0,
         csrfToken: null,
         wcId: '', // Change to whatever display button is. And then can be passed into wcUpdate
-        projectName: '', // TODO: Later become a user-submitted value
         accessedToday: false, // This is already set to False as default in the Models.py
     },
     mounted() {
@@ -43,7 +43,8 @@ new Vue({
                     if (todaysWC.length > 0 && this.todaysDate == todaysWC[0].date){ // Other functions also call this function, so to keep this from running and filling all fields with today's text, this conditional checks and makes sure the data is really for the present day.
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
-                        this.wprojectName = todaysWC[0].project_name
+                        this.projectId = todaysWC[0].project
+                        // this.project = todaysWC[0].project
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
                         this.dailyGoalComplete = todaysWC[0].daily_goal_bool
@@ -58,9 +59,10 @@ new Vue({
             axios.get(`/apis/v1/${wcId}`).then(
                     response => 
                     {this.textArea = response.data.text_area
+                    this.projectId = response.data.project
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
-                    this.projectName = response.data.project_name
+                    // this.projects = response.data.project
                     this.wcId = response.data.id
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool
@@ -72,7 +74,7 @@ new Vue({
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
-                'project_name': this.projectName,
+                'project': this.projectId, // the project id
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -87,8 +89,9 @@ new Vue({
                 this.getWc()
             })} else {
                 axios.put(`/apis/v1/${wcId}/`, {
+                    'project': this.projectId,
                     'user': this.username,
-                    'project_name': this.projectName,
+                    // 'project': this.projects,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
                     'daily_goal': this.dailyGoal,
@@ -101,11 +104,7 @@ new Vue({
     },
     computed: {
         calcProgress() {
-            // Calculates percentage of your progress toward goal
-            // TODO: add some sort of edgecase handling for if you go OVER the goal
             let calcProg = this.dailyWC/this.dailyGoal
-            // console.log(this.dailyWC/this.dailyGoal*100)
-            console.log(this.progress)
             this.progress = Math.round(this.dailyWC/this.dailyGoal*100)
             if (calcProg > this.dailyGoal && this.dailyGoal > 0) {
                 this.progress = 100
