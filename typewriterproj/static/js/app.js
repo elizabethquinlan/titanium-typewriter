@@ -3,6 +3,7 @@ new Vue({
     delimiters: ['[[', ']]'],
     data: {
         projectId: 1, // This has to be user-submitted, too.
+        projectData: null,
         username: '',
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
@@ -32,7 +33,7 @@ new Vue({
         },
         getProjects() {
             axios.get('/apis/v1/projects/').then(response => {
-                let projects = response.data.find(project => project.name === 'Unassigned')
+                this.projectData = response.data.find(project => project.name === 'Unassigned')
                 // alert(JSON.stringify(projects))
             })
         },
@@ -47,7 +48,7 @@ new Vue({
                     if (todaysWC.length > 0 && this.todaysDate == todaysWC[0].date){ // Other functions also call this function, so to keep this from running and filling all fields with today's text, this conditional checks and makes sure the data is really for the present day.
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
-                        this.projectId = todaysWC[0].project
+                        this.projectData = todaysWC[0].project
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
                         this.dailyGoalComplete = todaysWC[0].daily_goal_bool
@@ -76,7 +77,7 @@ new Vue({
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
-                'project': this.projectId, // the project id
+                'project': this.projectData, // this needs to be more complicated...
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -90,14 +91,17 @@ new Vue({
             }).then(response => {
                 this.getWc()
             })} else {
+                // This is not running properly anymore :/
+                // Put request is not working.
                 axios.put(`/apis/v1/${wcId}/`, {
-                    'project': this.projectId,
+                    'project': this.projectData,
                     'user': this.username,
                     // 'project': this.projects,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
                     'daily_goal': this.dailyGoal,
-                    'daily_goal_bool': this.dailyGoalComplete
+                    'daily_goal_bool': this.dailyGoalComplete,
+                    'accessed_today': this.accessedToday,
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())

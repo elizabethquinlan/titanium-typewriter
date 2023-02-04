@@ -9,19 +9,20 @@
     Hi {{ user.username }}!
     <div id="app">
 
-
+        [[ projectData ]]
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
                     <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
                     <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
-                    <!-- [[ wc ]]<br> -->
+                    [[ wc ]]<br>
                     Project: [[ wc.project.name ]]<br>
                     Project id: [[ wc.project.id ]]<br>
                     written on [[ wc.date ]] <br>
-                    id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
+                    wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
+                    Text area: [[ wc.text_area ]]<br>
                     Accessed today? [[ wc.accessed_today ]]<br>
                     Daily wc goal: [[ wc.daily_goal ]]<br>
                     By: {{ user.username }}
@@ -32,6 +33,7 @@
 
         <!-- Trigger/Open The Modal -->
         <button id="myBtn">Open Modal</button>
+        
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -57,6 +59,7 @@
         <br/>
         <!-- needs to have an endpoint that is just today's text blob. -->
         <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+        
         <div>Total words: [[ dailyWC ]]</div>
 
         <input type="text" value="{{ user.id }}" name="userid" hidden>
