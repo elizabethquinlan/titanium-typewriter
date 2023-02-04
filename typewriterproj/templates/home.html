@@ -16,8 +16,9 @@
                     <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
                     <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
-                    [[ wc ]]
-                    Project: [[ wc.project ]]<br>
+                    <!-- [[ wc ]]<br> -->
+                    Project: [[ wc.project.name ]]<br>
+                    Project id: [[ wc.project.id ]]<br>
                     written on [[ wc.date ]] <br>
                     id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>

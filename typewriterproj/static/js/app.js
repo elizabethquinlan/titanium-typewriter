@@ -1,11 +1,8 @@
-const user = JSON.parse(document.getElementById("userobject"))
-console.log(user)
-
 new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        projectId: 0, // This has to be user-submitted, too.
+        projectId: 1, // This has to be user-submitted, too.
         username: '',
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
@@ -22,6 +19,7 @@ new Vue({
     },
     mounted() {
         this.getWc()
+        this.getProjects()
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
     },
@@ -31,6 +29,12 @@ new Vue({
             // need to add in error handling for value that is less than 1
             // length of totalCharacter becomes null and this throws type error
             this.dailyWC = this.totalWord.length
+        },
+        getProjects() {
+            axios.get('/apis/v1/projects/').then(response => {
+                let projects = response.data.find(project => project.name === 'Unassigned')
+                // alert(JSON.stringify(projects))
+            })
         },
         getWc() {
             // Retrieves a data model based on whatever day you want to view.
@@ -44,7 +48,6 @@ new Vue({
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
                         this.projectId = todaysWC[0].project
-                        // this.project = todaysWC[0].project
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
                         this.dailyGoalComplete = todaysWC[0].daily_goal_bool
@@ -52,7 +55,7 @@ new Vue({
                         this.dailyGoal = todaysWC[0].daily_goal
                     }
                 })
-        },
+        },    
         wcView(wcId) { // passing wcId in as param
             // More individual than getWC()
             // Populates the page with data corresponding to what is stored in database under the given id
@@ -62,7 +65,6 @@ new Vue({
                     this.projectId = response.data.project
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
-                    // this.projects = response.data.project
                     this.wcId = response.data.id
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool

@@ -23,6 +23,12 @@ class WcView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DailyWcSerializer
 
 
-# path('projects/', ProjectList.as_view()),
-class ProjectList(generics.CreateAPIView):
+# path('newproject/', AddProject.as_view()),
+class AddProject(generics.CreateAPIView):
+    serializer_class = ProjectSerializer
+
+
+# path('projects/', ProjectsView.as_view())
+class ProjectsView(generics.ListAPIView):
+    queryset = Project.objects.all()
     serializer_class = ProjectSerializer
