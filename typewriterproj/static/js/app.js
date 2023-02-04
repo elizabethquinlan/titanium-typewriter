@@ -2,8 +2,14 @@ new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
     data: {
-        projectId: 1, // This has to be user-submitted, too.
+        projectId: 1, // Where did this come from?
+        
         projectData: null,
+        projectName: 'Hardcoded Name',
+        ProjectStartDate: null,
+        ProjectEndDate: null,
+        projectWcGoal: 0,
+
         username: '',
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
@@ -32,6 +38,7 @@ new Vue({
             this.dailyWC = this.totalWord.length
         },
         getProjects() {
+            // This is in case user does not specify a project, we can automatically assign it to this one??
             axios.get('/apis/v1/projects/').then(response => {
                 this.projectData = response.data.find(project => project.name === 'Unassigned')
                 // alert(JSON.stringify(projects))
@@ -49,6 +56,11 @@ new Vue({
                         // Assigning the values to populate with the corresponding values.
                         this.wcId = todaysWC[0].id
                         this.projectData = todaysWC[0].project
+                        this.projectId = todaysWC[0].project.id
+                        this.projectName = todaysWC[0].project.name
+                        this.ProjectStartDate = todaysWC[0].project.start_date
+                        this.ProjectEndDate = todaysWC[0].project.end_date
+                        this.projectWcGoal = todaysWC[0].project.word_count_goal
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
                         this.dailyGoalComplete = todaysWC[0].daily_goal_bool
@@ -60,24 +72,49 @@ new Vue({
         wcView(wcId) { // passing wcId in as param
             // More individual than getWC()
             // Populates the page with data corresponding to what is stored in database under the given id
-            axios.get(`/apis/v1/${wcId}`).then(
-                    response => 
+            axios.get(`/apis/v1/${wcId}`).then(response => 
                     {this.textArea = response.data.text_area
-                    this.projectId = response.data.project
+                    this.projectId = response.data.project.id
+                    this.projectData = response.data.project
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
                     this.wcId = response.data.id
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool
+                    this.projectName = response.data.project.name // This works.
                 }
             )
         },
         createUpdate(wcId) {
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
+            if (this.projectData == null) {
+                alert("This ran")
+                // Posting a new project instance.
+                axios.post('/apis/v1/newproject/', {
+                'project': {
+                    'name': 'Unassigned',
+                    'start_date': '2023-02-04',
+                    'end_date': '2023-02-04',
+                    'word_count_goal': 400,
+                    'id': 8
+                },
+                }, {
+                    headers: { 'X-CSRFToken': this.csrfToken }
+                }).then(response => {
+                    this.getWc()
+                })
+            }
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
-                'project': this.projectData, // this needs to be more complicated...
+                //'project': this.projectData, // this needs to be more complicated...
+                'project': {
+                    'name': 'This is a post.',
+                    'start_date': '2023-02-04',
+                    'end_date': '2023-02-04',
+                    'word_count_goal': 400,
+                    'id': 8
+                },
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -94,9 +131,14 @@ new Vue({
                 // This is not running properly anymore :/
                 // Put request is not working.
                 axios.put(`/apis/v1/${wcId}/`, {
-                    'project': this.projectData,
+                    'project': {
+                        'name': 'This is an update',
+                        'start_date': '2023-02-04',
+                        'end_date': '2023-02-04',
+                        'word_count_goal': 400,
+                        'id': 5
+                    },
                     'user': this.username,
-                    // 'project': this.projects,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
                     'daily_goal': this.dailyGoal,
@@ -118,6 +160,6 @@ new Vue({
                 this.progress = 0
             }
             return this.progress
-        }
+        },
     }
 })

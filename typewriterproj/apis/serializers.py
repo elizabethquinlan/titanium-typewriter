@@ -34,7 +34,16 @@ class DailyWcSerializer(serializers.ModelSerializer):
     # For the nested serializer to be writable, you'll need to create create() and/or update() methods
     # to explicitly specify how the child relationships should be saved.
     def update(self, instance, validated_data):
-        # Still need to figure out how to drag the project data into here.
+        project_data = validated_data.pop('project', {})
+        project = instance.project
+
+        if project_data:
+            project_serializer = ProjectSerializer(instance.project, data=project_data)
+            if project_serializer.is_valid():
+                project = project_serializer.save()
+        # Still need to figure out how to drag the project data into here.x
+        instance.project = project
+        # instance.project = validated_data.get('project', instance.project)
         instance.todays_wc = validated_data.get('todays_wc', instance.todays_wc)
         instance.user = validated_data.get('user', instance.user)
         instance.daily_goal = validated_data.get('daily_goal', instance.daily_goal)
@@ -49,8 +58,9 @@ class DailyWcSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         project_data = validated_data.pop('project', None)
+        project = Project.objects.get(id=project_data['id'])
         if project_data is None:
-            project, created = Project.objects.get_or_create(name='Default')
+            project, created = Project.objects.get_or_create(name='Unassigned')
         else:
             project = Project.objects.create(**project_data)
         daily_wc = DailyWc.objects.create(project=project, **validated_data)

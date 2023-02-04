@@ -9,7 +9,8 @@
     Hi {{ user.username }}!
     <div id="app">
 
-        [[ projectData ]]
+        [[ projectData ]]<br>
+        [[ projectName ]]<br>
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
@@ -17,7 +18,7 @@
                     <!-- [[ wc ]]<br> -->
                     <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
                     [[ wc ]]<br>
-                    Project: [[ wc.project.name ]]<br>
+                    Project name: [[ wc.project.name ]]<br>
                     Project id: [[ wc.project.id ]]<br>
                     written on [[ wc.date ]] <br>
                     wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
@@ -63,6 +64,7 @@
         <div>Total words: [[ dailyWC ]]</div>
 
         <input type="text" value="{{ user.id }}" name="userid" hidden>
+        Project name: [[ projectName ]]<br>
         Username: {{ user }}<br>
         User ID: {{ user.id }}<br>
         wc id: [[ wcId ]]<br>
