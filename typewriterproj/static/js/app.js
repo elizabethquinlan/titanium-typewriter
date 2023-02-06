@@ -44,28 +44,18 @@ new Vue({
                     // This assumes an unassigned project already exists and we are fetching it
                     axios.get('/apis/v1/projects/').then(response => { // This runs AFTER 51-58
                         this.projectData = response.data.find(project => project.name === 'Unassigned')
-                        alert(`${JSON.stringify(this.projectData)} This is the projectdata first`) // FOUR
-                        alert(`${JSON.stringify(response.data)} This is the response data`)
-                        // If it finds something in projectData, then it updates the data
-                        if (this.projectData !== undefined) // if this has something in it
+                        if (this.projectData !== undefined) // If it finds something in projectData, then it updates the data
                         {
-                            alert(`${JSON.stringify(this.projectData)} This is the projectdata second`) // FOUR
-                            this.projectName = this.projectData.name
+                            this.projectName = this.projectData.name // Put in a conditional because otherwise it will search for this.projectName, which doesn't exist, and throw an error.
                         }
                         if (this.projectName !== 'Unassigned') {
                             // If we did not find an "Unassigned" project, then make one using addProject()
-                            alert(`${this.projectName} is the project name`)
+                            this.addProject()
+                            // alert(`${this.projectName} is the project name`)
                         }
                     })
                 }
         },
-        // )} if (this.projectName != 'Unassigned') {
-        //     // IT KEEPS RUNNING THIS INSTEAD OF DOING THE GET FIRST
-        //     alert(this.projectName)
-        //     alert("null")
-        //     this.addProject()
-        // }
-// }},
         addProject() {
             axios.post('/apis/v1/addproject/', { // Does not need payload; automatic values exist already
             }, {

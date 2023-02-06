@@ -7,7 +7,7 @@ from rest_framework import generics
 class WcAPIView(generics.ListAPIView):
     serializer_class = DailyWcSerializer
     def get_queryset(self):
-        print(f"This is the WcAPIView path at '' {self.request.user}") # Just the user's name
+        # print(f"This is the WcAPIView path at '' {self.request.user}") # Just the user's name
         return DailyWc.objects.filter(user=self.request.user) # django is aware of what user is logged in and so will only retrieve data for that user.
 
 
