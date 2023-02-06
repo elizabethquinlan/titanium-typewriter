@@ -3,7 +3,6 @@ from .serializers import DailyWcSerializer, ProjectSerializer
 from rest_framework import generics
 
 
-
 # path('', WcAPIView.as_view()),
 class WcAPIView(generics.ListAPIView):
     serializer_class = DailyWcSerializer
@@ -23,7 +22,7 @@ class WcView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DailyWcSerializer
 
 
-# path('newproject/', AddProject.as_view()),
+# path('addproject/', AddProject.as_view()),
 class AddProject(generics.CreateAPIView):
     serializer_class = ProjectSerializer
 

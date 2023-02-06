@@ -57,11 +57,13 @@ class DailyWcSerializer(serializers.ModelSerializer):
         return instance
 
     def create(self, validated_data):
+        # have a project object on it. Get project off using id
         project_data = validated_data.pop('project', None)
-        project = Project.objects.get(id=project_data['id'])
+        # print(validated_data)
         if project_data is None:
             project, created = Project.objects.get_or_create(name='Unassigned')
         else:
+            project = Project.objects.get(id=project_data['id'])
             project = Project.objects.create(**project_data)
         daily_wc = DailyWc.objects.create(project=project, **validated_data)
         return daily_wc

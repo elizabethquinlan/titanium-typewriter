@@ -11,7 +11,7 @@ class Project(models.Model):
 
 
     def __str__(self) -> str:
-        return f'The Project {self.name} started on {self.start_date} and will end on {self.end_date} with a goal of {self.word_count_goal}.'
+        return f'The Project {self.name} started on {self.start_date} and will end on {self.end_date} with a goal of {self.word_count_goal} and an id of {self.id}.'
 
 
 # add a default value for the 'project' field in the DailyWC model that corresponds to the "Unassigned" project.

@@ -10,7 +10,7 @@ urlpatterns = [
     # get, put, and delete and accessing via primary key (e.g. apis/v1/200)
     path('<int:pk>/', WcView.as_view()),
     # Creates a new project
-    path('newproject/', AddProject.as_view()),
+    path('addproject/', AddProject.as_view()),
     # Viewing all projects
     path('projects/', ProjectsView.as_view())
 ]

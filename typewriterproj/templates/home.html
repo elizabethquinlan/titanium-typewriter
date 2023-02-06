@@ -9,8 +9,8 @@
     Hi {{ user.username }}!
     <div id="app">
 
-        [[ projectData ]]<br>
-        [[ projectName ]]<br>
+        Project data: [[ projectData ]]<br>
+        Project name: [[ projectName ]]<br>
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
