@@ -16,7 +16,7 @@ class Project(models.Model):
 
 # add a default value for the 'project' field in the DailyWC model that corresponds to the "Unassigned" project.
 class DailyWc(models.Model):
-    # would reference the 'id' field in the Porject model.
+    # would reference the 'id' field in the Project model.
     project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE) # each DailyWc instance is associated with a single Project instance, and each Project instance can have multiple DailyWc instances associated with it.
     user = models.ForeignKey(User, on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
     todays_wc = models.IntegerField(default=0)

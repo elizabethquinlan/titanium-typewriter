@@ -9,8 +9,8 @@
     Hi {{ user.username }}!
     <div id="app">
 
-        Project data: [[ projectData ]]<br>
-        Project name: [[ projectId ]]<br>
+        Project data: [[ projectData ]]<br><br>
+        Project id: [[ projectId ]]<br>
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
@@ -18,6 +18,13 @@
                     <!-- [[ wc ]]<br> -->
                     <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
                     [[ wc ]]<br>
+                    <br>
+                    <br>
+                    <br>
+                    [[ wc.project ]]
+                    <br>
+                    <br>
+                    <br>
                     Project name: [[ wc.project.name ]]<br>
                     Project id: [[ wc.project.id ]]<br>
                     written on [[ wc.date ]] <br>

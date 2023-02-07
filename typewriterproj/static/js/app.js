@@ -31,7 +31,7 @@ new Vue({
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
         this.getProj()
-        // this.getWc()
+        this.getWc()
     },
     methods: {
         countText() {
@@ -45,6 +45,7 @@ new Vue({
             axios.get('/apis/v1/projects/').then(response => {
                 this.projects = response.data
                 this.projectData = response.data.find(project => project.name === 'Unassigned')
+                this.projectId = this.projectData.id
                 if (this.projectData !== undefined) {
                     this.starterProjName = this.projectData.name // There is a problem with saving this variable for some reason.
                 }
@@ -61,9 +62,8 @@ new Vue({
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(response => {
-                this.projectId = response.data.id
-                this.getWc()
                 this.getProj()
+                this.getWc()
             })
             // TODO: upate the wordcount with this new id??
         },
@@ -111,17 +111,9 @@ new Vue({
         createUpdate(wcId) {
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
-            alert(this.selectedProject)
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
-                'project': this.selectedProject,
-                //'project': this.projectData, // this needs to be more complicated...
-                // 'project': {
-                //     'name': 'This is a post.',
-                //     'start_date': '2023-02-04',
-                //     'end_date': '2023-02-04',
-                //     'word_count_goal': 400,
-                // },
+                'project': 17,
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -136,7 +128,7 @@ new Vue({
                 this.getWc()
             })} else {
                 axios.put(`/apis/v1/${wcId}/`, {
-                    'project': this.selectedProject,
+                    'project': 17,
                     'user': this.username,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
