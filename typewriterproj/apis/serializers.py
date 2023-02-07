@@ -34,6 +34,7 @@ class DailyWcSerializer(serializers.ModelSerializer):
     # For the nested serializer to be writable, you'll need to create create() and/or update() methods
     # to explicitly specify how the child relationships should be saved.
     def update(self, instance, validated_data):
+        print(validated_data)
         project_data = validated_data.pop('project', {})
         project = instance.project
 
