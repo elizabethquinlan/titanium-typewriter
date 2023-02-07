@@ -39,37 +39,42 @@
         </ul>
 
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
+        <div id="top-nav">
+            this is inside the nav/
+            <button id="myBtn"><span class="material-icons">menu</span></button>
         
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Daily wordcount goal:</p>
+                    <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                    <p>Today's wc progress:</p>
+                    <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                    <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                    <p>Your total progress:</p>
+                    <p>[[ allWcs ]] words</p>
 
-        <!-- The Modal -->
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Daily wordcount goal:</p>
-                <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
-                <p>Today's wc progress:</p>
-                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
-                <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
-                <p>Your total progress:</p>
-                <p>[[ allWcs ]] words</p>
-
+                </div>
             </div>
+        
+            <button @click="createUpdate(wcId)">This will update or create depending on params</button>
         </div>
-        
-        
-        <button @click="createUpdate(wcId)">This will update or create depending on params</button>
 
-        <!-- remember: Vue delimiters are [[ ]] -->
-        <label for="textbody">Enter Text:</label>
-        <br/>
         <!-- needs to have an endpoint that is just today's text blob. -->
-        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
-        
+        <div class="text-field">
+            <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+            <div class="wordcount">[[ dailyWC ]] words</div>
+        </div>
+
+        <div id="bottom-nav">
+            This is where the project shit is going to go when we get along again.
+        </div>
         <div>Total words: [[ dailyWC ]]</div>
 
         <input type="text" value="{{ user.id }}" name="userid" hidden>
+        <br>
         Project name: [[ projectName ]]<br>
         Username: {{ user }}<br>
         User ID: {{ user.id }}<br>
@@ -131,11 +136,15 @@
 
 
     {% if user.is_authenticated %}
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
+    <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
+    <!-- <i class="fa-solid fa-right-from-bracket" ><a href="{% url 'logout' %}">Log out</a></i> -->
+    <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
     {% else %}
     <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <p><a href="{% url 'signup' %}"> Sign Up</a></p>
+    <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
+    <!-- <a href="{% url 'login' %}">Log In</a> -->
+    <!-- <p><a href="{% url 'signup' %}"> Sign Up</a></p> -->
+    <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>
     {% endif %}
     {% endblock %}
 
