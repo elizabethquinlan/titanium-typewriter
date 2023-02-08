@@ -22,6 +22,15 @@
 #         instance.save()
 #         return instance
 
+
+        # project, created = Project.objects.get_or_create(
+        #     name=project_data['name'],
+        #     defaults={'word_count_goal': project_data['word_count_goal'],
+        #               'start_date': project_data['start_date'],
+        #               'end_date': project_data['end_date']}
+        # )
+
+
 #     def create(self, validated_data):
 #         # have a project object on it. Get project off using id
 #         project_data = validated_data.pop('project', None)
@@ -56,3 +65,18 @@
     #         'name': project_name,
     #     }
     # )
+
+        # project_name = project_data.get('name')
+
+        # # get_or_create method to try to retrieve an existing Project with the same name, 
+        # # specified in project_data. If the Project exists, it updates it and returns it.
+        # project, created = Project.objects.get_or_create(
+        #     name=project_name,
+        #     # The defaults argument is used to specify the default values for the fields
+        #     defaults={
+        #         'name': project_name,
+        #         'word_count_goal': validated_data.get('word_count_goal', 0),
+        #         'start_date': validated_data.get('start_date', None),
+        #         'end_date': validated_data.get('end_date', None)
+        #         }
+        # )

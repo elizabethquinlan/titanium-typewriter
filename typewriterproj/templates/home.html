@@ -11,6 +11,7 @@
 
         Project data: [[ projectData ]]<br><br>
         Project id: [[ projectId ]]<br>
+        Project name: [[ projectName ]]<br>
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
@@ -83,14 +84,14 @@
         TOTAL WC: [[ allWcs ]]<br>
         <p>Accessed today? [[ accessedToday ]]</p>
         
-    
+            <!-- Projects: [[ projects ]] -->
             <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
                 or allow them to enter a new project name. -->
             <!-- Project Selection Form -->
             <form>
                 <label for="project">Select Project:</label>
                 <select id="project" v-model="selectedProject">
-                    <option v-for="project in projects" :value="project.id">[[ project.name ]]</option>  <!-- What does :value do? -->
+                    <option v-for="project in projects" :value="project.id">[[ project ]]</option>  <!-- What does :value do? -->
                     <!-- <option v-for="project in projects" :value="project.id">[[ project ]]</option> -->
                 </select>
             </form>

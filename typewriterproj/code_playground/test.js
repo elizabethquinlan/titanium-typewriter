@@ -93,3 +93,24 @@ createUpdate() {
 // },
 
 // todaysDate: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
+
+
+// createUpdate(wcId) {
+//     // If this is false AND it's today's date.
+//     // Means you didn't access it today yet and can create a new instance.
+//     if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
+//     {axios.post('/apis/v1/new/', {
+//         'project': 54,
+//         // 'project': 33,
+//         //'project': this.projectData, // this needs to be more complicated...
+//         // 'project': {
+//         //     // THIS CREATES A NEW PROJECT?? INSTEAD OF ADDING TO EXISTING ONE?
+//         //     //'id': 16, //completely ignored this lol
+//         //     'id': this.projectId,
+//         //     'name': this.projectName,
+//         //     'start_date': this.projectStartDate,
+//         //     'end_date': this.projectEndDate,
+//         //     'word_count_goal': this.projectWcGoal
+//         // },
+//         'todays_wc': this.dailyWC,
+//         'text_area': this.textArea,

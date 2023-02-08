@@ -6,7 +6,7 @@ new Vue({
         
         projectData: null,
         projects: [],
-        selectedProject: null, //This stores all project data on it for use in forms.
+        selectedProject: null, //This stores the pk of the selected project.
         projectName: null,
         projectStartDate: '',
         projectEndDate: '',
@@ -124,11 +124,6 @@ new Vue({
                         // Assigning the values to populate with the corresponding values.
                         this.projectId = todaysWC[0].project.id
                         this.wcId = todaysWC[0].id
-                        this.projectData = todaysWC[0].project
-                        this.projectName = todaysWC[0].project.name
-                        this.projectStartDate = todaysWC[0].project.start_date
-                        this.projectEndDate = todaysWC[0].project.end_date
-                        this.projectWcGoal = todaysWC[0].project.word_count_goal
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
                         this.dailyGoalComplete = todaysWC[0].daily_goal_bool
@@ -143,14 +138,14 @@ new Vue({
             // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(response => 
                     {this.textArea = response.data.text_area
-                    this.projectId = response.data.project.id
                     this.projectData = response.data.project
+                    this.projectName = response.data.project.name // This works.
+                    this.projectId = response.data.project.id
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
                     this.wcId = response.data.id
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool
-                    this.projectName = response.data.project.name // This works.
                 }
             )
         },
@@ -158,25 +153,13 @@ new Vue({
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
-            {axios.post('/apis/v1/new/', {
-                // 'project': 33,
-                //'project': this.projectData, // this needs to be more complicated...
-                'project': {
-                    // THIS CREATES A NEW PROJECT?? INSTEAD OF ADDING TO EXISTING ONE?
-                    //'id': 16, //completely ignored this lol
-                    'id': this.projectId,
-                    'name': this.projectName,
-                    'start_date': this.projectStartDate,
-                    'end_date': this.projectEndDate,
-                    'word_count_goal': this.projectWcGoal
-                },
-                // 'project': {
-                //     'id': this.projectId,
-                //     'name': this.otherVariable,
-                //     'start_date': this.projectStartDate,
-                //     'end_date': this.projectEndDate,
-                //     'word_count_goal': this.projectWcGoal
-                // },
+            { if (this.selectedProject == null)
+                {
+                    // assignes selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
+                    this.selectedProject = this.projectId
+                }
+                axios.post('/apis/v1/new/', {
+                'project': this.selectedProject,
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -190,14 +173,16 @@ new Vue({
             }).then(response => {
                 this.getWc()
             })} else {
+                console.log("We are testing this endpoint")
+                console.log(this.wcId)
                 axios.put(`/apis/v1/${wcId}/`, {
                     // This does not have functionality to update project info; handled on separate form.
-                    'user': this.username,
+                    'project': this.selectedProject,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
+                    'user': this.username,
                     'daily_goal': this.dailyGoal,
                     'daily_goal_bool': this.dailyGoalComplete,
-                    'accessed_today': this.accessedToday,
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())

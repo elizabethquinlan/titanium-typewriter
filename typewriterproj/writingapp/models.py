@@ -15,8 +15,8 @@ class Project(models.Model):
 
 
 class DailyWc(models.Model):
-    # would reference the 'id' field in the Project model. db_index=True: foreign key index
-    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE, db_index=True) # each DailyWc instance is associated with a single Project instance, and each Project instance can have multiple DailyWc instances associated with it.
+    # would reference the 'id' field in the Project model.
+    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE) # each DailyWc instance is associated with a single Project instance, and each Project instance can have multiple DailyWc instances associated with it.
     user = models.ForeignKey(User, on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
     todays_wc = models.IntegerField(default=0)
     text_area = models.CharField(max_length=500000, blank=True, default='Text here.') # Save the text area each day so the user can access that page and see it.
@@ -27,4 +27,4 @@ class DailyWc(models.Model):
     
     
     def __str__(self) -> str:
-        return f'{self.user} wrote {self.todays_wc} words on {self.date} for Project {self.project}.'
+        return f'{self.user} with an id of {self.id} wrote {self.todays_wc} words on {self.date} for Project {self.project}.'
