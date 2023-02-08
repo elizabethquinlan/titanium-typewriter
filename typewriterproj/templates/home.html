@@ -88,7 +88,9 @@
     
         <!-- If user's daily goal has been finished, dailygoalcomplete=complete --><br>
 
-        
+        <option v-for="project in projects" :value="project.id">
+            [[ project.name ]]
+        </option>
 
 
         <p>Daily goal: <input
@@ -102,6 +104,8 @@
             </div>
         </div>
         {% endif %}
+
+
 
         
 
