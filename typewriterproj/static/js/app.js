@@ -6,11 +6,16 @@ new Vue({
         
         projectData: null,
         projects: [],
-        //selectedProject: 0, //What does this do?
+        selectedProject: null, //This stores all project data on it for use in forms.
         projectName: null,
-        projectStartDate: null,
-        projectEndDate: null,
+        projectStartDate: '',
+        projectEndDate: '',
         projectWcGoal: 0,
+
+        newProjectName: null,
+        newProjStartDate: null,
+        newProjEndDate: null,
+        newProjWcGoal: 0,
 
         username: '',
         dailyWC: 1,
@@ -44,8 +49,9 @@ new Vue({
             axios.get('/apis/v1/projects/').then(response => {
                 this.projects = response.data
                 this.projectData = response.data.find(project => project.name === 'Unassigned')
-                this.projectId = this.projectData.id
                 if (this.projectData !== undefined) {
+                    // projectData will either have 'Unassigned' project data or be undefined
+                    // if there is something in projectData, assign variables using that
                     this.projectName = this.projectData.name
                     this.projectStartDate = this.projectData.start_date
                     this.projectEndDate = this.projectData.end_date
@@ -69,6 +75,42 @@ new Vue({
                 this.getWc()
             })
             // TODO: upate the wordcount with this new id??
+        },
+        createProject() {
+            // Post the new project to the API            
+            // If there is an end date but not start date, set the start date to today in the post.
+            if (this.newProjStartDate == null && this.newProjEndDate !== null)
+                this.newProjStartDate = this.todaysDate
+            if (this.newProjStartDate == null && this.newProjEndDate == null)
+            {
+                // This payload includes some default-assigned values
+                axios.post('/apis/v1/addproject/', { 
+                    'name': this.newProjectName,
+                    'start_date': this.todaysDate,
+                    'end_date': '2024-11-05',
+                    'word_count_goal': this.newProjWcGoal
+                }, {
+                    headers: { 'X-CSRFToken': this.csrfToken }
+                }).then(response => {
+                  this.projects.push(response.data);
+                  this.newProjectName = '';
+                  this.getProj()
+                })
+            } else {
+                // This payload includes all user-submitted values
+                axios.post('/apis/v1/addproject/', { 
+                    'name': this.newProjectName,
+                    'start_date': this.newProjStartDate,
+                    'end_date': this.newProjEndDate,
+                    'word_count_goal': this.newProjWcGoal
+                }, {
+                    headers: { 'X-CSRFToken': this.csrfToken }
+                }).then(response => {
+                  this.projects.push(response.data);
+                  this.newProjectName = '';
+                  this.getProj()
+                })
+            }
         },
         getWc() {
             // Retrieves a data model based on whatever day you want to view.
@@ -97,6 +139,7 @@ new Vue({
         },    
         wcView(wcId) { // passing wcId in as param
             // More individual than getWC()
+            // TODO: If user switches to this without creating an instance of today, how do I handle that? Can I auto make one here?
             // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(response => 
                     {this.textArea = response.data.text_area
@@ -148,13 +191,7 @@ new Vue({
                 this.getWc()
             })} else {
                 axios.put(`/apis/v1/${wcId}/`, {
-                    // 'project': 33,
-                    // 'project': {
-                    //     'name': this.projectName,
-                    //     'start_date': this.projectStartDate,
-                    //     'end_date': this.projectEndDate,
-                    //     'word_count_goal': this.projectWcGoal
-                    // },
+                    // This does not have functionality to update project info; handled on separate form.
                     'user': this.username,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,

@@ -83,15 +83,38 @@
         TOTAL WC: [[ allWcs ]]<br>
         <p>Accessed today? [[ accessedToday ]]</p>
         
-        <!-- <p>[[ projectName ]]</p> -->
-        <!-- <input v-model="projectName" placeholder="add a tag..." /> -->
     
-        <!-- If user's daily goal has been finished, dailygoalcomplete=complete --><br>
+            <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
+                or allow them to enter a new project name. -->
+            <!-- Project Selection Form -->
+            <form>
+                <label for="project">Select Project:</label>
+                <select id="project" v-model="selectedProject">
+                    <option v-for="project in projects" :value="project.id">[[ project.name ]]</option>  <!-- What does :value do? -->
+                    <!-- <option v-for="project in projects" :value="project.id">[[ project ]]</option> -->
+                </select>
+            </form>
+            Selected project (using value id): [[ selectedProject ]]
+            <!--                         
+            <p v-for="project in projects">
+                [[project.name]]
+                [[project.id]]
+                [[project.start_date]]
+                [[project.end_date]]
+                [[project.word_count_goal]]
+            </v-for> -->
 
-        <option v-for="project in projects" :value="project.id">
-            [[ project.name ]]
-        </option>
-
+            <!-- Project Creation Form -->
+            <!-- PUT INSIDE A MODAL -->
+            <br>
+            <form>
+                <label for="newProject">Create Project:</label><br>
+                <input type="text" id="newProject" v-model="newProjectName"><br>
+                <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                <button @click.prevent="createProject">Create</button><br>
+            </form>
 
         <p>Daily goal: <input
             type="number"

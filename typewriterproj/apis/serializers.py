@@ -26,7 +26,12 @@ class DailyWcSerializer(serializers.ModelSerializer):
     # to explicitly specify how the child relationships should be saved.
     def create(self, validated_data):
         project_data = validated_data.pop('project')
+        project_name = project_data.get('name')
+    
+
         try:
+            # checking if a project named "Unassigned" exists
+            #  if it does, using that project instance as the foreign key for the new DailyWc instance
             project = Project.objects.get(name='Unassigned')
         except Project.DoesNotExist:
             project = Project.objects.create(**project_data)
