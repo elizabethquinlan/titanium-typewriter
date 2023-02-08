@@ -14,14 +14,12 @@ class Project(models.Model):
         return f'The Project {self.name} started on {self.start_date} and will end on {self.end_date} with a goal of {self.word_count_goal} and an id of {self.id}.'
 
 
-# add a default value for the 'project' field in the DailyWC model that corresponds to the "Unassigned" project.
 class DailyWc(models.Model):
-    # would reference the 'id' field in the Project model.
-    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE) # each DailyWc instance is associated with a single Project instance, and each Project instance can have multiple DailyWc instances associated with it.
+    # would reference the 'id' field in the Project model. db_index=True: foreign key index
+    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE, db_index=True) # each DailyWc instance is associated with a single Project instance, and each Project instance can have multiple DailyWc instances associated with it.
     user = models.ForeignKey(User, on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
     todays_wc = models.IntegerField(default=0)
-    # Save the text area each day so the user can access that page and see it.
-    text_area = models.CharField(max_length=500000, blank=True, default='Text here.')
+    text_area = models.CharField(max_length=500000, blank=True, default='Text here.') # Save the text area each day so the user can access that page and see it.
     date = models.DateField("today's date", default=datetime.date.today)
     accessed_today = models.BooleanField(default=False)
     daily_goal = models.IntegerField(default=0)

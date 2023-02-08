@@ -113,7 +113,14 @@ new Vue({
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {axios.post('/apis/v1/new/', {
-                'project': 17,
+                // 'project': 33,
+                //'project': this.projectData, // this needs to be more complicated...
+                'project': {
+                    'name': this.projectName,
+                    'start_date': this.projectStartDate,
+                    'end_date': this.projectEndDate,
+                    'word_count_goal': this.projectWcGoal
+                },
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,
@@ -128,7 +135,13 @@ new Vue({
                 this.getWc()
             })} else {
                 axios.put(`/apis/v1/${wcId}/`, {
-                    'project': 17,
+                    // 'project': 33,
+                    // 'project': {
+                    //     'name': this.projectName,
+                    //     'start_date': this.projectStartDate,
+                    //     'end_date': this.projectEndDate,
+                    //     'word_count_goal': this.projectWcGoal
+                    // },
                     'user': this.username,
                     'todays_wc': this.dailyWC, // TODO: refuses to do the thing if wc is 0 (resolving as 1)
                     'text_area': this.textArea,
