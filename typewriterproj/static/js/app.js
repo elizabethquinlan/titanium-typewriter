@@ -6,12 +6,11 @@ new Vue({
         
         projectData: null,
         projects: [],
-        selectedProject: 0, //What does this do?
+        //selectedProject: 0, //What does this do?
         projectName: null,
         projectStartDate: null,
         projectEndDate: null,
         projectWcGoal: 0,
-        starterProjName: null,
 
         username: '',
         dailyWC: 1,
@@ -47,9 +46,13 @@ new Vue({
                 this.projectData = response.data.find(project => project.name === 'Unassigned')
                 this.projectId = this.projectData.id
                 if (this.projectData !== undefined) {
-                    this.starterProjName = this.projectData.name // There is a problem with saving this variable for some reason.
+                    this.projectName = this.projectData.name
+                    this.projectStartDate = this.projectData.start_date
+                    this.projectEndDate = this.projectData.end_date
+                    this.projectWcGoal = this.projectData.word_count_goal
+                    this.projectId = this.projectData.id
                 }
-                if (this.starterProjName !== 'Unassigned') {
+                if (this.projectName !== 'Unassigned') {
                     // If we did not find an "Unassigned" project, then make one using addDefaultProj()
                     this.addDefaultProj()
                 }
@@ -116,11 +119,21 @@ new Vue({
                 // 'project': 33,
                 //'project': this.projectData, // this needs to be more complicated...
                 'project': {
+                    // THIS CREATES A NEW PROJECT?? INSTEAD OF ADDING TO EXISTING ONE?
+                    //'id': 16, //completely ignored this lol
+                    'id': this.projectId,
                     'name': this.projectName,
                     'start_date': this.projectStartDate,
                     'end_date': this.projectEndDate,
                     'word_count_goal': this.projectWcGoal
                 },
+                // 'project': {
+                //     'id': this.projectId,
+                //     'name': this.otherVariable,
+                //     'start_date': this.projectStartDate,
+                //     'end_date': this.projectEndDate,
+                //     'word_count_goal': this.projectWcGoal
+                // },
                 'todays_wc': this.dailyWC,
                 'text_area': this.textArea,
                 'date': this.todaysDate,

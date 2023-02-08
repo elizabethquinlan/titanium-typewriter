@@ -36,3 +36,33 @@ Put this back in laterr
     <script src="{% static 'js/app.js' %}" defer></script> <!-- include JS file -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
+
+
+
+<form id="project-form">
+  <label for="projectSelect">Assign to project:</label>
+
+  <div class="form-group">
+      <input type="text" class="form-control" id="project-name" placeholder="Enter project name">
+      <select class="form-control" id="project-select">
+        <option value="">Select a project</option>
+        <option v-for="project in projects" :value="project.id">[[ project.name ]]</option>
+      </select>
+  </div><br><br>
+  
+  <select v-model="newProjectName">
+  <option v-for="project in projects" :value="project.id">
+      [[ project.name ]]
+    </option>
+  </select><br><br>
+
+  <div>
+      <!-- <input type="text" v-model="selectedProject" @input="updateProject"/> -->
+      <datalist id="projects">
+        <option v-for="project in projects" :value="project.name"></option>
+      </datalist>
+  </div><br><br>
+
+  <input type="text" id="project-name" v-model="newProjectName">
+  <button type="submit">Submit</button>
+</form>
