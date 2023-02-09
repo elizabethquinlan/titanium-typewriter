@@ -9,6 +9,21 @@
     Hi {{ user.username }}!
     <div id="app">
 
+        <!-- [[ wordcounts ]] -->
+        GENEARTE DATES START:<br>
+        <div class="calendar">
+            <div class="calendar-header">
+                <p v-for="day in weekdays" :key="day">[[ day.toLocaleDateString() ]]</p>
+                <!-- <div class="calendar-day" v-for="day in week">
+                    [[ day ]]
+                </div> -->
+            </div>
+        </div>
+
+
+        GENERATE DATES END<br>
+
+
         Project data: [[ projectData ]]<br><br>
         Selected Project: [[ selectedProject ]]<br>
         Project id: [[ projectId ]]<br>
@@ -35,45 +50,14 @@
         </ul>
 
         <div id="top-nav">
+            this is inside the nav/
+
             <div id="content">
                 <p>This is the content-container</p>
-                <a href="#modal1">Open first modal</a><br>
-                <a href="#modal2">Open second modal</a>
-            
-            <div id="modal1"><a href="#">Close</a>
-                This is the first modal
-                <p>Daily wordcount goal:</p>
-                <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
-                <p>Today's wc progress:</p>
-                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
-                <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
-                <p>Your total progress:</p>
-                <p>[[ allWcs ]] words</p>
-            </div>
-
-              <div id="modal2"><a href="#">Close</a>
-                This is the second modal
-                <form>
-                    <label for="newProject">Create Project:</label><br>
-                    <input type="text" id="newProject" v-model="newProjectName"><br>
-                    <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                    <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                    <input type="number" id="newProject" v-model="newProjWcGoal"><br>
-                    <button @click.prevent="createProject">Create</button><br>
-                </form>
-            </div>
-            </div>
-
-
-            this is inside the nav/
-            <!-- Trigger/Open The Modal -->
-            <button id="myBtn"><span class="material-icons">menu</span></button>
-        
-            <!-- The Modal -->
-            <div id="Modal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <span class="close">&times;</span>
+                <a href="#modal1"><span class="material-icons">menu</span></button>
+                
+                <div id="modal1"><a href="#">Close</a>
+                    This is the first modal
                     <p>Daily wordcount goal:</p>
                     <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
                     <p>Today's wc progress:</p>
@@ -82,7 +66,9 @@
                     <p>Your total progress:</p>
                     <p>[[ allWcs ]] words</p>
                 </div>
+
             </div>
+
         
             <button @click="createUpdate(wcId)">This will update or create depending on params</button>
         </div>
@@ -105,6 +91,26 @@
                     </option>
                 </select>
             </form>
+
+
+
+            <div id="content">
+                <p>This is the content-container for second modal</p>
+                <a href="#modal2"><span class="material-icons">menu</span></button>
+                
+                <div id="modal2"><a href="#">Close</a>
+                    This is the second modal
+                    <form>
+                        <label for="newProject">Create Project:</label><br>
+                        <input type="text" id="newProject" v-model="newProjectName"><br>
+                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                        <button @click.prevent="createProject">Create</button><br>
+                    </form>
+
+            </div>
+        </div>
         </div>
         <div>Total words: [[ dailyWC ]]</div>
 

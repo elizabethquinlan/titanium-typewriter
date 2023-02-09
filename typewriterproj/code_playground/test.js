@@ -114,3 +114,69 @@ createUpdate() {
 //         // },
 //         'todays_wc': this.dailyWC,
 //         'text_area': this.textArea,
+
+// Get the modal
+// var modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// // When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
+
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
+
+
+// IDK WHAT THIS DOES ANYMORE:
+// calendarRows() {
+//     for (let i = 0; i < this.dates.length; i++) {
+//       if (i % 7 === 0 && i !== 0) {
+//         this.rows.push(this.row);
+//       }
+//       this.row.push(this.dates[i]);
+//       if (i === this.dates.length - 1) {
+//         this.rows.push(row);
+//       }
+//     }
+//     return this.rows;
+// }
+
+
+// GOOD FOR MONTHLY:
+// generateDates() {
+//     this.numDays = new Date(this.year, this.month + 1, 0).getDate();
+//     this.dates = [];
+//     for (let i = 1; i <= this.numDays; i++) {
+//         this.dates.push(new Date(this.year, this.month, i));
+//     }
+    
+//     this.year = 2022; // hardcoded for now.
+//     this.month = 2; // January
+//     // this.dates = generateDates(this.year, this.month)
+//     return this.dates;
+// },
+
+// year: 2022,
+// month: 0,
+// dates: [],
+// dateWordCounts: {},
+// daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+// rows: [],
+// row: [],
+// numDays: null,
+// dates: [],

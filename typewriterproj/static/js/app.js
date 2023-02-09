@@ -30,6 +30,9 @@ new Vue({
         csrfToken: null,
         wcId: '', // Change to whatever display button is. And then can be passed into wcUpdate
         accessedToday: false, // This is already set to False as default in the Models.py
+
+        week: [],
+        day: null,
     },
     mounted() {
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
@@ -77,7 +80,7 @@ new Vue({
             // TODO: upate the wordcount with this new id??
         },
         createProject() {
-            // Post the new project to the API            
+            // Post the new project to the API
             // If there is an end date but not start date, set the start date to today in the post.
             if (this.newProjStartDate == null && this.newProjEndDate !== null)
                 this.newProjStartDate = this.todaysDate
@@ -158,7 +161,6 @@ new Vue({
                     // assigns selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
                     this.selectedProject = this.projectId
                 }
-                alert(this.selectedProject)
                 axios.post('/apis/v1/new/', {
                 'project': this.selectedProject,
                 'todays_wc': this.dailyWC,
@@ -198,6 +200,18 @@ new Vue({
                 this.progress = 0
             }
             return this.progress
+        },
+        weekdays() {
+            // creating a new date object from today's date
+            const today = new Date()
+
+            for (let i = 0; i < 7; i++) {
+                // sets the date to the current day minus today's day of the week plus the current loop iteration
+                this.day = new Date(today)
+                this.day.setDate(this.day.getDate() - today.getDay() + i)
+                this.week.push(this.day)
+            }
+            return this.week
         },
     }
 })

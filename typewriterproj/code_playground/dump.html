@@ -66,3 +66,21 @@ Put this back in laterr
   <input type="text" id="project-name" v-model="newProjectName">
   <button type="submit">Submit</button>
 </form>
+
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn"><span class="material-icons">menu</span></button>
+        
+            <!-- The Modal -->
+            <div id="Modal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Daily wordcount goal:</p>
+                    <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                    <p>Today's wc progress:</p>
+                    <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                    <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                    <p>Your total progress:</p>
+                    <p>[[ allWcs ]] words</p>
+                </div>
+            </div>
