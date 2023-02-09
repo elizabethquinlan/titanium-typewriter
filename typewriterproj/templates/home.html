@@ -10,24 +10,19 @@
     <div id="app">
 
         Project data: [[ projectData ]]<br><br>
+        Selected Project: [[ selectedProject ]]<br>
         Project id: [[ projectId ]]<br>
-        Project name: [[ projectName ]]<br>
         <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
             <li>
                 <span :csrftoken="csrfToken" :key="wc.id">
                     <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
                     <!-- [[ wc ]]<br> -->
                     <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
-                    [[ wc ]]<br>
+                    wc data: [[ wc ]]<br>
+                    <br>
+                    Project id: [[ wc.project ]]
                     <br>
                     <br>
-                    <br>
-                    [[ wc.project ]]
-                    <br>
-                    <br>
-                    <br>
-                    Project name: [[ wc.project.name ]]<br>
-                    Project id: [[ wc.project.id ]]<br>
                     written on [[ wc.date ]] <br>
                     wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
                     <br>[[ wc.todays_wc ]] words<br>
@@ -76,7 +71,6 @@
 
         <input type="text" value="{{ user.id }}" name="userid" hidden>
         <br>
-        Project name: [[ projectName ]]<br>
         Username: {{ user }}<br>
         User ID: {{ user.id }}<br>
         wc id: [[ wcId ]]<br>
@@ -91,7 +85,7 @@
             <form>
                 <label for="project">Select Project:</label>
                 <select id="project" v-model="selectedProject">
-                    <option v-for="project in projects" :value="project.id">[[ project ]]</option>  <!-- What does :value do? -->
+                    <option v-for="project in projects" :value="project.id">[[ project.name ]]</option>  <!-- What does :value do? -->
                     <!-- <option v-for="project in projects" :value="project.id">[[ project ]]</option> -->
                 </select>
             </form>

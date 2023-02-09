@@ -48,7 +48,7 @@ new Vue({
             // This is in case user does not specify a project, we can automatically assign it to this one
             axios.get('/apis/v1/projects/').then(response => {
                 this.projects = response.data
-                this.projectData = response.data.find(project => project.name === 'Unassigned')
+                this.projectData = response.data.find(project => project.name === 'Unassigned') // Searching for project with this name
                 if (this.projectData !== undefined) {
                     // projectData will either have 'Unassigned' project data or be undefined
                     // if there is something in projectData, assign variables using that
@@ -121,8 +121,9 @@ new Vue({
                     this.allWcs = this.wordcounts.reduce((acc, wordcount) => acc + wordcount.todays_wc, 0);
                     //  If such a thing exists and array isn't empty, update the variables on the page
                     if (todaysWC.length > 0 && this.todaysDate == todaysWC[0].date){ // Other functions also call this function, so to keep this from running and filling all fields with today's text, this conditional checks and makes sure the data is really for the present day.
-                        // Assigning the values to populate with the corresponding values.
-                        this.projectId = todaysWC[0].project.id
+                        // Assigning the values to populate with the corresponding data.
+                        this.projectId = todaysWC[0].project
+                        this.projectName = todaysWC[0].project.name
                         this.wcId = todaysWC[0].id
                         this.textArea = todaysWC[0].text_area
                         this.dailyWC = todaysWC[0].todays_wc
@@ -138,9 +139,7 @@ new Vue({
             // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(response => 
                     {this.textArea = response.data.text_area
-                    this.projectData = response.data.project
-                    this.projectName = response.data.project.name // This works.
-                    this.projectId = response.data.project.id
+                    this.projectId = response.data.project
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
                     this.wcId = response.data.id
@@ -153,11 +152,7 @@ new Vue({
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
-            { if (this.selectedProject == null)
-                {
-                    // assignes selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
-                    this.selectedProject = this.projectId
-                }
+            {
                 axios.post('/apis/v1/new/', {
                 'project': this.selectedProject,
                 'todays_wc': this.dailyWC,
@@ -173,8 +168,11 @@ new Vue({
             }).then(response => {
                 this.getWc()
             })} else {
-                console.log("We are testing this endpoint")
-                console.log(this.wcId)
+                if (this.selectedProject == null)
+                {
+                    // assigns selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
+                    this.selectedProject = this.projectId
+                }
                 axios.put(`/apis/v1/${wcId}/`, {
                     // This does not have functionality to update project info; handled on separate form.
                     'project': this.selectedProject,
