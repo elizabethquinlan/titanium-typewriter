@@ -65,7 +65,17 @@
         </div>
 
         <div id="bottom-nav">
-            This is where the project shit is going to go when we get along again.
+            <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
+                or allow them to enter a new project name. -->
+            <!-- Project Selection Form -->
+            <form autocomplete="off">
+                <select id="project" v-model="selectedProject">
+                    <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
+                    <option v-for="project in projects" :value="project.id">
+                        [[ project.name ]]
+                    </option>
+                </select>
+            </form>
         </div>
         <div>Total words: [[ dailyWC ]]</div>
 
@@ -78,29 +88,9 @@
         TOTAL WC: [[ allWcs ]]<br>
         <p>Accessed today? [[ accessedToday ]]</p>
         
-            <!-- Projects: [[ projects ]] -->
-            <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
-                or allow them to enter a new project name. -->
-            <!-- Project Selection Form -->
-            <form>
-                <label for="project">Select Project:</label>
-                <select id="project" v-model="selectedProject">
-                    <option v-for="project in projects" :value="project.id">
-                        [[ project.name ]]
-                    </option>
-                    <!-- <option v-for="project in projects" :value="project.id">[[ project ]]</option> if -->
-                </select>
-            </form>
 
             Selected project (using value id): [[ selectedProject ]]
-            <!--                         
-            <p v-for="project in projects">
-                [[project.name]]
-                [[project.id]]
-                [[project.start_date]]
-                [[project.end_date]]
-                [[project.word_count_goal]]
-            </v-for> -->
+
 
             <!-- Project Creation Form -->
             <!-- PUT INSIDE A MODAL -->
