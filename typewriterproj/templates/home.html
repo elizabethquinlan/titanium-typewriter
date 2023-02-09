@@ -34,13 +34,43 @@
             </li>
         </ul>
 
-        <!-- Trigger/Open The Modal -->
         <div id="top-nav">
+            <div id="content">
+                <p>This is the content-container</p>
+                <a href="#modal1">Open first modal</a><br>
+                <a href="#modal2">Open second modal</a>
+            
+            <div id="modal1"><a href="#">Close</a>
+                This is the first modal
+                <p>Daily wordcount goal:</p>
+                <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                <p>Today's wc progress:</p>
+                <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                <p>Your total progress:</p>
+                <p>[[ allWcs ]] words</p>
+            </div>
+
+              <div id="modal2"><a href="#">Close</a>
+                This is the second modal
+                <form>
+                    <label for="newProject">Create Project:</label><br>
+                    <input type="text" id="newProject" v-model="newProjectName"><br>
+                    <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                    <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                    <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                    <button @click.prevent="createProject">Create</button><br>
+                </form>
+            </div>
+            </div>
+
+
             this is inside the nav/
+            <!-- Trigger/Open The Modal -->
             <button id="myBtn"><span class="material-icons">menu</span></button>
         
             <!-- The Modal -->
-            <div id="myModal" class="modal">
+            <div id="Modal" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -51,7 +81,6 @@
                     <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
                     <p>Your total progress:</p>
                     <p>[[ allWcs ]] words</p>
-
                 </div>
             </div>
         
@@ -94,15 +123,21 @@
 
             <!-- Project Creation Form -->
             <!-- PUT INSIDE A MODAL -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <form>
+                        <label for="newProject">Create Project:</label><br>
+                        <input type="text" id="newProject" v-model="newProjectName"><br>
+                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                        <button @click.prevent="createProject">Create</button><br>
+                    </form>
+                </div>
+            </div>
             <br>
-            <form>
-                <label for="newProject">Create Project:</label><br>
-                <input type="text" id="newProject" v-model="newProjectName"><br>
-                <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                <input type="number" id="newProject" v-model="newProjWcGoal"><br>
-                <button @click.prevent="createProject">Create</button><br>
-            </form>
+
 
         <p>Daily goal: <input
             type="number"

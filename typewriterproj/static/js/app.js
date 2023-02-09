@@ -153,6 +153,12 @@ new Vue({
             // Means you didn't access it today yet and can create a new instance.
             if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
             {
+                if (this.selectedProject == null)
+                {
+                    // assigns selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
+                    this.selectedProject = this.projectId
+                }
+                alert(this.selectedProject)
                 axios.post('/apis/v1/new/', {
                 'project': this.selectedProject,
                 'todays_wc': this.dailyWC,
@@ -168,11 +174,6 @@ new Vue({
             }).then(response => {
                 this.getWc()
             })} else {
-                if (this.selectedProject == null)
-                {
-                    // assigns selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
-                    this.selectedProject = this.projectId
-                }
                 axios.put(`/apis/v1/${wcId}/`, {
                     // This does not have functionality to update project info; handled on separate form.
                     'project': this.selectedProject,
