@@ -33,6 +33,8 @@ new Vue({
 
         week: [],
         day: null,
+        filteredWcs: null,
+        wordcountDict: {}
     },
     mounted() {
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
@@ -117,8 +119,9 @@ new Vue({
         },
         getWc() {
             // Retrieves a data model based on whatever day you want to view.
-            axios.get('/apis/v1').then(response => {
+            axios.get('/apis/v1').then(response => {                
                     this.wordcounts = response.data
+                    // alert(JSON.stringify(this.wordcounts));
                     // When the page mounts, filter down to date that is today's date.
                     let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
                     this.allWcs = this.wordcounts.reduce((acc, wordcount) => acc + wordcount.todays_wc, 0);
@@ -188,7 +191,8 @@ new Vue({
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(res => this.getWc())
             console.log("Was accessed today.")}
-        }
+        },
+
     },
     computed: {
         calcProgress() {
@@ -201,17 +205,58 @@ new Vue({
             }
             return this.progress
         },
-        weekdays() {
-            // creating a new date object from today's date
-            const today = new Date()
-
-            for (let i = 0; i < 7; i++) {
-                // sets the date to the current day minus today's day of the week plus the current loop iteration
-                this.day = new Date(today)
-                this.day.setDate(this.day.getDate() - today.getDay() + i)
-                this.week.push(this.day)
+        wordcountsInWeek() {
+            let weekDates = this.weekdays.map(day => day.toLocaleDateString());
+            for (let count of this.wordcounts) {
+              let date = new Date(count.date).toLocaleDateString();
+              if (weekDates.includes(date)) {
+                this.wordcountDict[date] = count;
+              }
             }
-            return this.week
-        },
-    }
+            return this.wordcountDict
+          }
+        }
+        // weekdays() {
+        //     // creating a new date object from today's date
+        //     const today = new Date()
+        //     const dict = {}
+        //     const newWordcounts = Object.entries(this.wordcounts).reduce((acc, [key, value]) => {
+        //         const date = new Date(key);
+        //         if (date >= start && date <= end) {
+        //           acc[date.toDateString()] = value;
+        //         }
+        //         return acc;
+        //     }, {});
+
+        //     for (let i = 0; i < 7; i++) {
+        //         const day = new Date(start);
+        //         week.push({
+        //         date: new Date(day.setDate(day.getDate() + i)),
+        //         wordcount: newWordcounts[day.toDateString()]
+        //         });
+        //     }
+                //Automatically pair it with correct object
+                // Creating dict
+                // key(date): value(data)
+                // If data.date == this.day:
+                // let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
+                // put them together
+                // sets the date to the current day minus today's day of the week plus the current loop iteration
+            //     this.day = new Date(today)
+            //     this.day.setDate(this.day.getDate() - today.getDay() + i)
+            //     this.week.push(this.day)
+            // }
+        //     return this.week
+        // },
+
+        // wordcountsInWeek() {
+        //     const week = this.weekdays;
+        //     const wordcountsArray = Object.values(this.wordcounts);
+        //     return wordcountsArray.filter(wordcount => {
+        //       return week.some(day => {
+        //         return day.toDateString() === new Date(wordcount.date).toDateString();
+        //       });
+        //     });
+        // },
+    //}
 })

@@ -156,6 +156,16 @@ createUpdate() {
 //     return this.rows;
 // }
 
+// wordcountsInWeek() {
+//     const week = this.weekdays;
+//     const wordcountsArray = Object.values(this.wordcounts);
+//     return wordcountsArray.filter(wordcount => {
+//       return week.some(day => {
+//         return day.toDateString() === new Date(wordcount.date).toDateString();
+//       });
+//     });
+// },
+
 
 // GOOD FOR MONTHLY:
 // generateDates() {

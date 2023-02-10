@@ -9,19 +9,21 @@
     Hi {{ user.username }}!
     <div id="app">
 
-        <!-- [[ wordcounts ]] -->
+
+        [[ wordcountDict ]]
+        <!-- 
+        The wordcounts object: <br>
+        [[ wordcounts ]]<br>
         GENEARTE DATES START:<br>
         <div class="calendar">
             <div class="calendar-header">
-                <p v-for="day in weekdays" :key="day">[[ day.toLocaleDateString() ]]</p>
-                <!-- <div class="calendar-day" v-for="day in week">
-                    [[ day ]]
-                </div> -->
+                <div v-for="day in weekdays" :key="day.date">
+                    [[ day.date ]]: [[ day.wordcount.count ]]
+                </div>
+                <p v-for="day in weekdays">[[ day.toLocaleDateString() ]]</p>
             </div>
         </div>
-
-
-        GENERATE DATES END<br>
+        GENERATE DATES END<br> -->
 
 
         Project data: [[ projectData ]]<br><br>
