@@ -179,6 +179,11 @@ new Vue({
             }).then(response => {
                 this.getWc()
             })} else {
+                if (this.selectedProject == null)
+                {
+                    // assigns selectedProject to projectId, which should be the Unassigned project that was retrieved earlier.
+                    this.selectedProject = this.projectId
+                }
                 axios.put(`/apis/v1/${wcId}/`, {
                     // This does not have functionality to update project info; handled on separate form.
                     'project': this.selectedProject,
@@ -198,7 +203,7 @@ new Vue({
         calcProgress() {
             let calcProg = this.dailyWC/this.dailyGoal
             this.progress = Math.round(this.dailyWC/this.dailyGoal*100)
-            if (calcProg > this.dailyGoal && this.dailyGoal > 0) {
+            if (calcProg >= 1 && this.dailyGoal > 0) {
                 this.progress = 100
             } else if (this.progress == 'Infinity') {
                 this.progress = 0

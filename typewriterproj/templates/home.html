@@ -6,11 +6,10 @@
 
 <body>
     {% if request.user.is_authenticated %}
-    Hi {{ user.username }}!
+
     <div id="app">
 
 
-        [[ wordcountDict ]]
         <!-- 
         The wordcounts object: <br>
         [[ wordcounts ]]<br>
@@ -24,6 +23,120 @@
             </div>
         </div>
         GENERATE DATES END<br> -->
+
+        <div id="top-nav">
+            this is inside the nav/
+
+
+            <div id="content">
+                <p>This is the content-container</p>
+                
+                <a href="#modal1"><span class="material-icons">menu</span></button>
+                
+                <div id="modal1">
+                    <div class="modal-container">
+                        <p><a href="#">Close</a></p>
+                        <p class="header-modal">Settings</p>
+                        Hi {{ user.username }}!
+                        <p>Daily wordcount goal:</p>
+                        <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                        <p>Today's wc progress:</p>
+                        <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                        <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                        <p>Your total progress:</p>
+                        <p>[[ allWcs ]] words</p>
+                    </div>
+                </div>
+
+            </div>
+
+        
+        </div>
+
+        <div class="shell">
+            <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
+                <span>[[ progress ]]%</span>
+            </div>
+        </div>
+
+        <!-- needs to have an endpoint that is just today's text blob. -->
+        <div class="text-field">
+            <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+            <div class="wordcount">[[ dailyWC ]] words</div>
+        </div>
+
+        <div id="bottom-nav">
+
+            <div id="project-content">
+                <!-- This is the content-container for second modal -->
+                <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
+                or allow them to enter a new project name. -->
+                <!-- Project Selection Form -->
+                <form autocomplete="off">
+                    <select id="project" v-model="selectedProject">
+                        <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
+                        <option v-for="project in projects" :value="project.id">
+                            [[ project.name ]]
+                        </option>
+                    </select>
+                </form>
+
+
+                <a href="#modal2"><span class="material-symbols-outlined">library_add</span></button>
+                
+                <div id="modal2"><a href="#">Close</a>
+                    This is the second modal
+                    <div class="modal-container">
+                        <form>
+                            <label for="newProject" class="header-modal">Create Project:</label><br>
+                            <input type="text" id="newProject" v-model="newProjectName"><br>
+                            <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                            <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                            <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                            <button @click.prevent="createProject">Create</button><br>
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+
+        <div>
+            <button @click="createUpdate(wcId)">Save</button>
+        </div>
+        </div>
+
+
+        <input type="text" value="{{ user.id }}" name="userid" hidden>
+        <br>
+        Username: {{ user }}<br>
+        User ID: {{ user.id }}<br>
+        wc id: [[ wcId ]]<br>
+        [[ todaysDate ]]<br>
+        TOTAL WC: [[ allWcs ]]<br>
+        <p>Accessed today? [[ accessedToday ]]</p>
+        
+
+            Selected project (using value id): [[ selectedProject ]]
+
+
+            <!-- Project Creation Form -->
+            <!-- PUT INSIDE A MODAL -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-container">
+                    <form>
+                        <label for="newProject">Create Project:</label><br>
+                        <input type="text" id="newProject" v-model="newProjectName"><br>
+                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                        <button @click.prevent="createProject">Create</button><br>
+                    </form>
+                </div>
+            </div>
+            <br>
+
+            
 
 
         Project data: [[ projectData ]]<br><br>
@@ -51,112 +164,8 @@
             </li>
         </ul>
 
-        <div id="top-nav">
-            this is inside the nav/
-
-            <div id="content">
-                <p>This is the content-container</p>
-                <a href="#modal1"><span class="material-icons">menu</span></button>
-                
-                <div id="modal1"><a href="#">Close</a>
-                    This is the first modal
-                    <p>Daily wordcount goal:</p>
-                    <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
-                    <p>Today's wc progress:</p>
-                    <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
-                    <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
-                    <p>Your total progress:</p>
-                    <p>[[ allWcs ]] words</p>
-                </div>
-
-            </div>
-
-        
-            <button @click="createUpdate(wcId)">This will update or create depending on params</button>
-        </div>
-
-        <!-- needs to have an endpoint that is just today's text blob. -->
-        <div class="text-field">
-            <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
-            <div class="wordcount">[[ dailyWC ]] words</div>
-        </div>
-
-        <div id="bottom-nav">
-            <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
-                or allow them to enter a new project name. -->
-            <!-- Project Selection Form -->
-            <form autocomplete="off">
-                <select id="project" v-model="selectedProject">
-                    <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
-                    <option v-for="project in projects" :value="project.id">
-                        [[ project.name ]]
-                    </option>
-                </select>
-            </form>
 
 
-
-            <div id="content">
-                <p>This is the content-container for second modal</p>
-                <a href="#modal2"><span class="material-icons">menu</span></button>
-                
-                <div id="modal2"><a href="#">Close</a>
-                    This is the second modal
-                    <form>
-                        <label for="newProject">Create Project:</label><br>
-                        <input type="text" id="newProject" v-model="newProjectName"><br>
-                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
-                        <button @click.prevent="createProject">Create</button><br>
-                    </form>
-
-            </div>
-        </div>
-        </div>
-        <div>Total words: [[ dailyWC ]]</div>
-
-        <input type="text" value="{{ user.id }}" name="userid" hidden>
-        <br>
-        Username: {{ user }}<br>
-        User ID: {{ user.id }}<br>
-        wc id: [[ wcId ]]<br>
-        [[ todaysDate ]]<br>
-        TOTAL WC: [[ allWcs ]]<br>
-        <p>Accessed today? [[ accessedToday ]]</p>
-        
-
-            Selected project (using value id): [[ selectedProject ]]
-
-
-            <!-- Project Creation Form -->
-            <!-- PUT INSIDE A MODAL -->
-            <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <form>
-                        <label for="newProject">Create Project:</label><br>
-                        <input type="text" id="newProject" v-model="newProjectName"><br>
-                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
-                        <button @click.prevent="createProject">Create</button><br>
-                    </form>
-                </div>
-            </div>
-            <br>
-
-
-        <p>Daily goal: <input
-            type="number"
-            v-model="dailyGoal"
-            placeholder="Text"
-          /> words </p> <!-- If you want this to change every day, you have to have it attached to the Data Model-->
-        <div class="shell">
-            <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
-                <span>[[ progress ]]%</span>
-            </div>
-        </div>
         {% endif %}
 
 
