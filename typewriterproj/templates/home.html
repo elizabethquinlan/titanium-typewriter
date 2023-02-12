@@ -10,18 +10,13 @@
     <div id="app">
 
 
-        <!-- 
+<!--         
         The wordcounts object: <br>
         [[ wordcounts ]]<br>
+        [[ week ]]
+        <br>
         GENEARTE DATES START:<br>
-        <div class="calendar">
-            <div class="calendar-header">
-                <div v-for="day in weekdays" :key="day.date">
-                    [[ day.date ]]: [[ day.wordcount.count ]]
-                </div>
-                <p v-for="day in weekdays">[[ day.toLocaleDateString() ]]</p>
-            </div>
-        </div>
+        <p v-for="day in weekdays">[[ day.toLocaleDateString() ]]</p><br>
         GENERATE DATES END<br> -->
 
         <div id="top-nav">
@@ -34,6 +29,7 @@
                 <a href="#modal1"><span class="material-icons">menu</span></button>
                 
                 <div id="modal1">
+
                     <div class="modal-container">
                         <p><a href="#">Close</a></p>
                         <p class="header-modal">Settings</p>
@@ -45,6 +41,9 @@
                         <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
                         <p>Your total progress:</p>
                         <p>[[ allWcs ]] words</p>
+                        <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
+                        <!-- <i class="fa-solid fa-right-from-bracket" ><a href="{% url 'logout' %}">Log out</a></i> -->
+                        <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
                     </div>
                 </div>
 
@@ -166,27 +165,16 @@
 
 
 
+        {% else %}
+        <p>You are not logged in</p>
+        <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
+        <!-- <a href="{% url 'login' %}">Log In</a> -->
+        <!-- <p><a href="{% url 'signup' %}"> Sign Up</a></p> -->
+        <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>
         {% endif %}
 
 
-
-        
-
     </div>
-
-
-
-    {% if user.is_authenticated %}
-    <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
-    <!-- <i class="fa-solid fa-right-from-bracket" ><a href="{% url 'logout' %}">Log out</a></i> -->
-    <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
-    {% else %}
-    <p>You are not logged in</p>
-    <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
-    <!-- <a href="{% url 'login' %}">Log In</a> -->
-    <!-- <p><a href="{% url 'signup' %}"> Sign Up</a></p> -->
-    <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>
-    {% endif %}
     {% endblock %}
 
 
