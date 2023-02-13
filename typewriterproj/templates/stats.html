@@ -7,8 +7,12 @@ Here are some words.
 
 <div id="app">
     have to use an axios call using user's ID?
-    [[ projects ]]
-    [[ username ]]
+        <ul v-for="project in projects" >
+        <li>
+            [[ project ]]
+        </li>
+
+    </p> 
 </div>
 
 {% endblock %}

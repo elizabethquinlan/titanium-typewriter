@@ -10,16 +10,22 @@
     <div id="app">
     <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
 
+    <p v-for="date in week">[[ date.toLocaleDateString("en-US", { weekday: "short", month: "numeric", day: "numeric" }) ]] - [[ wcByDay[week.indexOf(date)].todays_wc ]]</p>
 
 
-    <div v-for="dateWc in wcByDay">
+    <!-- <div v-for="dateWc in wcByDay">
         <span :csrftoken="csrfToken" :key="dateWc.id"></span>
+        <p>[[ dateWc.todays_wc ]]</p>
+            [[ dateWc.toLocaleDateString("en-US", { weekday: "short", month: "numeric", day: "numeric" }) ]]
+             - 
+            [[ wcByDay[week.indexOf(date)].todays_wc ]]
+        </p>
+
         <p v-if=" [[ dateWc.id ]] > 0"> <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
             <button @click="wcView(dateWc.id)">Display</button><br> <!-- Passing wc.id as params -->
         </p>
-        <p>[[ dateWc.todays_wc ]]</p>
         <!-- add conditional if there is an id? -->
-    </div>
+    </div> -->
 
 
 

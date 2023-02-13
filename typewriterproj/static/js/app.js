@@ -170,7 +170,7 @@ new Vue({
                         })
                         console.log(this.wcByDay)
                 })
-        },    
+        },
         wcView(wcId) { // passing wcId in as param
             // More individual than getWC()
             // TODO: If user switches to this without creating an instance of today, how do I handle that? Can I auto make one here?
