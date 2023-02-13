@@ -11,13 +11,18 @@
     <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
 
 
+        <p v-for="day in week">[[ day ]]</p><br>
+    <!-- <div>
+        <div v-for="day in weekdays">
+          [[ day.toLocaleDateString() ]]
+        </div>
+    </div> -->
             <!--         
         The wordcounts object: <br>
         [[ wordcounts ]]<br>
         [[ week ]]
         <br>
         GENEARTE DATES START:<br>
-        <p v-for="day in weekdays">[[ day.toLocaleDateString() ]]</p><br>
         GENERATE DATES END<br> -->
 
         <div id="top-nav">

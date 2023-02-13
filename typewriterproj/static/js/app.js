@@ -32,13 +32,16 @@ new Vue({
         accessedToday: false, // This is already set to False as default in the Models.py
 
         week: [],
-        day: null,
         filteredWcs: null,
-        wordcountDict: {}
+        wordcountDict: {},
+        wcByDay: null,
     },
     mounted() {
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+        console.log(this.wordcounts)
+    },
+    created() {
         this.getProj()
         this.getWc()
     },
@@ -137,6 +140,25 @@ new Vue({
                         this.accessedToday = true
                         this.dailyGoal = todaysWC[0].daily_goal
                     }
+                    let today = new Date();
+                    for (let i = 0; i < 7; i++) {
+                        let day = new Date(today.getTime());
+                        day.setDate(today.getDate() - i);
+                        this.week.push(day);
+                    }
+                    this.wcByDay = this.week.map(day => {
+                        //logic here for how to map wordcount object based on date
+                        console.log(day)
+                        return this.wordcounts.find(wc => {
+                            // Check three booleans and they all have to be true.
+                            // Looking for the date property
+                            const sameDay = wc.date.slice(8) == day.getDate()
+                            const sameMonth = wc.date.slice(5, 7) == day.getMonth() + 1
+                            const sameYear = wc.date.slice(0, 4) == day.getFullYear()
+                            return sameDay && sameMonth && sameYear
+                        })
+                    })
+                    console.log(this.wcByDay)
                 })
         },    
         wcView(wcId) { // passing wcId in as param
@@ -197,7 +219,6 @@ new Vue({
             }).then(res => this.getWc())
             console.log("Was accessed today.")}
         },
-
     },
     computed: {
         calcProgress() {
@@ -210,25 +231,5 @@ new Vue({
             }
             return this.progress
         },
-        wordcountsInWeek() {
-            let weekDates = this.weekdays.map(day => day.toLocaleDateString());
-            for (let count of this.wordcounts) {
-              let date = new Date(count.date).toLocaleDateString();
-              if (weekDates.includes(date)) {
-                this.wordcountDict[date] = count;
-              }
-            }
-            return this.wordcountDict
-        },
-        weekdays() {
-            const currentDate = this.day;
-            const week = [];
-            for (let i = 0; i < 7; i++) {
-              const nextDay = new Date(currentDate);
-              nextDay.setDate(currentDate.getDate() + i);
-              week.push(nextDay);
-            }
-            return week;
-        }
     }
 })

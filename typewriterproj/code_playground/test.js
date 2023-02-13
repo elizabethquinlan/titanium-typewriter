@@ -220,3 +220,23 @@ createUpdate() {
 //     this.day.setDate(this.day.getDate() - today.getDay() + i)
 //     this.week.push(this.day)
 //     return this.week
+
+
+// For each weekday, search wordcounts list for matching date
+// 
+// wordcountsInWeek() {
+//     return "Hello world"
+    // return this.week.map(day => {
+    //     //logic here for how to map wordcount object based on date
+    //     let variable = this.wordcounts.filter(wc => {
+    //         // Looking for the date property
+    //         return wc.date == day
+    //     })
+    //     console.log(variable)
+    // })
+
+
+
+//     console.log(typeof this.week) // object
+//     return this.week.reverse();
+// }
