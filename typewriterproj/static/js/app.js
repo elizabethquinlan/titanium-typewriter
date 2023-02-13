@@ -39,7 +39,6 @@ new Vue({
     mounted() {
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
-        console.log(this.wordcounts)
     },
     created() {
         this.getProj()
@@ -140,25 +139,36 @@ new Vue({
                         this.accessedToday = true
                         this.dailyGoal = todaysWC[0].daily_goal
                     }
-                    let today = new Date();
-                    for (let i = 0; i < 7; i++) {
-                        let day = new Date(today.getTime());
-                        day.setDate(today.getDate() - i);
-                        this.week.push(day);
-                    }
-                    this.wcByDay = this.week.map(day => {
+                    // Starting logic of calendar. It's in this function because otherwise it executes before the wordcounts variable has anything
+                    if (this.wcByDay === null) {
+                            console.log('it is null')
+                            let today = new Date();
+                            for (let i = 0; i < 7; i++) {
+                                let day = new Date(today.getTime());
+                                day.setDate(today.getDate() - i);
+                                this.week.push(day);
+                            }
+                        }
                         //logic here for how to map wordcount object based on date
-                        console.log(day)
-                        return this.wordcounts.find(wc => {
-                            // Check three booleans and they all have to be true.
-                            // Looking for the date property
-                            const sameDay = wc.date.slice(8) == day.getDate()
-                            const sameMonth = wc.date.slice(5, 7) == day.getMonth() + 1
-                            const sameYear = wc.date.slice(0, 4) == day.getFullYear()
-                            return sameDay && sameMonth && sameYear
+                        this.wcByDay = this.week.map(day => {
+                            let wc = this.wordcounts.find(wc => {
+                                // Check three booleans and they all have to be true.
+                                // Looking for the date property
+                                const sameDay = wc.date.slice(8) == day.getDate()
+                                const sameMonth = wc.date.slice(5, 7) == day.getMonth() + 1
+                                const sameYear = wc.date.slice(0, 4) == day.getFullYear()
+                                return sameDay && sameMonth && sameYear
+                            })
+                            return {
+                                // add default values for if the map does not find a match for that day.
+                                date: day,
+                                daily_goal: wc ? wc.daily_goal: 0,
+                                todays_wc: wc ? wc.todays_wc: 0,
+                                wc: wc ? wc.todays_wc: 0,
+                                id: wc ? wc.id: 0
+                            }
                         })
-                    })
-                    console.log(this.wcByDay)
+                        console.log(this.wcByDay)
                 })
         },    
         wcView(wcId) { // passing wcId in as param

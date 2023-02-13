@@ -11,19 +11,17 @@
     <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
 
 
-        <p v-for="day in week">[[ day ]]</p><br>
-    <!-- <div>
-        <div v-for="day in weekdays">
-          [[ day.toLocaleDateString() ]]
-        </div>
-    </div> -->
-            <!--         
-        The wordcounts object: <br>
-        [[ wordcounts ]]<br>
-        [[ week ]]
-        <br>
-        GENEARTE DATES START:<br>
-        GENERATE DATES END<br> -->
+
+    <div v-for="dateWc in wcByDay">
+        <span :csrftoken="csrfToken" :key="dateWc.id"></span>
+        <p v-if=" [[ dateWc.id ]] > 0"> <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
+            <button @click="wcView(dateWc.id)">Display</button><br> <!-- Passing wc.id as params -->
+        </p>
+        <p>[[ dateWc.todays_wc ]]</p>
+        <!-- add conditional if there is an id? -->
+    </div>
+
+
 
         <div id="top-nav">
             this is inside the nav/

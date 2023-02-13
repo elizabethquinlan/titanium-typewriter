@@ -94,3 +94,46 @@ Put this back in laterr
       <p v-for="day in week">[[ day.toLocaleDateString() ]]</p>
   </div>
 </div>
+
+
+
+
+    <!-- Project data: [[ projectData ]]<br><br>
+    Selected Project: [[ selectedProject ]]<br>
+    Project id: [[ projectId ]]<br>
+    <ul v-for="wc in wordcounts" > .reverse so most recent item shows up on top 
+        <li>
+            <span :csrftoken="csrfToken" :key="wc.id">
+                <button @click="wcView(wc.id)">Display</button><br> Passing wc.id as params
+                wc data: [[ wc ]]<br>
+                <br>
+                Project id: [[ wc.project ]]
+                <br>
+                <br>
+                written on [[ wc.date ]] <br>
+                wc id: <span id="wc_id">[[ wc.id ]]</span> putting wc_id in scope so it can be passed as params
+                <br>[[ wc.todays_wc ]] words<br>
+                Text area: [[ wc.text_area ]]<br>
+                Accessed today? [[ wc.accessed_today ]]<br>
+                Daily wc goal: [[ wc.daily_goal ]]<br>
+                By: {{ user.username }}
+            </span>
+        </li>
+    </ul> -->
+
+            <!-- <p v-for="date in wcByDay">
+                [[ date ? date.id : 'No data']] -
+            </p><br> -->
+        
+    <!-- <div>
+        <div v-for="day in weekdays">
+          [[ day.toLocaleDateString() ]]
+        </div>
+    </div> -->
+            <!--         
+        The wordcounts object: <br>
+        [[ wordcounts ]]<br>
+        [[ week ]]
+        <br>
+        GENEARTE DATES START:<br>
+        GENERATE DATES END<br> -->
