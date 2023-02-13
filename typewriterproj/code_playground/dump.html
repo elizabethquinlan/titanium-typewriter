@@ -24,6 +24,67 @@ Put this back in laterr
 
 
 
+<br>
+Username: {{ user }}<br>
+User ID: {{ user.id }}<br>
+wc id: [[ wcId ]]<br>
+[[ todaysDate ]]<br>
+TOTAL WC: [[ allWcs ]]<br>
+<p>Accessed today? [[ accessedToday ]]</p>
+
+
+    Selected project (using value id): [[ selectedProject ]]
+
+
+    <!-- Project Creation Form -->
+    <!-- PUT INSIDE A MODAL -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-container">
+            <form>
+                <label for="newProject">Create Project:</label><br>
+                <input type="text" id="newProject" v-model="newProjectName"><br>
+                <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                <button @click.prevent="createProject">Create</button><br>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    
+
+
+Project data: [[ projectData ]]<br><br>
+Selected Project: [[ selectedProject ]]<br>
+Project id: [[ projectId ]]<br>
+<ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
+    <li>
+        <span :csrftoken="csrfToken" :key="wc.id">
+            <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
+            <!-- [[ wc ]]<br> -->
+            <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
+            wc data: [[ wc ]]<br>
+            <br>
+            Project id: [[ wc.project ]]
+            <br>
+            <br>
+            written on [[ wc.date ]] <br>
+            wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
+            <br>[[ wc.todays_wc ]] words<br>
+            Text area: [[ wc.text_area ]]<br>
+            Accessed today? [[ wc.accessed_today ]]<br>
+            Daily wc goal: [[ wc.daily_goal ]]<br>
+            By: {{ user.username }}
+        </span>
+    </li>
+</ul>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -4,35 +4,35 @@
 
 {% block content %}
 
-<body>
     {% if request.user.is_authenticated %}
 
     <div id="app">
-    <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
+        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
+        <input type="text" value="{{ user.id }}" name="userid" hidden>
 
-    <p v-for="date in week">[[ date.toLocaleDateString("en-US", { weekday: "short", month: "numeric", day: "numeric" }) ]] - [[ wcByDay[week.indexOf(date)].todays_wc ]]</p>
-
-
-    <!-- <div v-for="dateWc in wcByDay">
-        <span :csrftoken="csrfToken" :key="dateWc.id"></span>
-        <p>[[ dateWc.todays_wc ]]</p>
-            [[ dateWc.toLocaleDateString("en-US", { weekday: "short", month: "numeric", day: "numeric" }) ]]
-             - 
-            [[ wcByDay[week.indexOf(date)].todays_wc ]]
-        </p>
-
-        <p v-if=" [[ dateWc.id ]] > 0"> <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
-            <button @click="wcView(dateWc.id)">Display</button><br> <!-- Passing wc.id as params -->
-        </p>
-        <!-- add conditional if there is an id? -->
-    </div> -->
-
-
+        <ul v-for="date in week">
+            <div class="date-card">
+                <li>
+                    [[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]
+                </li>
+    
+                <li>
+                    [[ date.toLocaleDateString("en-US", { month: "numeric", day: "numeric" }) ]]
+                </li>
+    
+                <li>
+                    WC: [[ wcByDay[week.indexOf(date)].todays_wc ]]
+                </li>
+    
+                <li v-if=" [[ wcByDay[week.indexOf(date)].todays_wc ]]> 0">
+                    <button @click="wcView(wcByDay[week.indexOf(date)].id)">Display</button><br> Passing wc.id as params -->
+                    If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.</p>
+                </li>
+            </div>
+        </ul>
 
         <div id="top-nav">
             this is inside the nav/
-
-
             <div id="content">
                 <p>This is the content-container</p>
                 
@@ -52,15 +52,11 @@
                         <p>Your total progress:</p>
                         <p>[[ allWcs ]] words</p>
                         <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
-                        <!-- <i class="fa-solid fa-right-from-bracket" ><a href="{% url 'logout' %}">Log out</a></i> -->
-                        <!-- <p><a href="{% url 'logout' %}">Log Out</a></p> -->
                     </div>
                 </div>
-
             </div>
-
-        
         </div>
+
 
         <div class="shell">
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
@@ -81,7 +77,7 @@
                 <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
                 or allow them to enter a new project name. -->
                 <!-- Project Selection Form -->
-                <form autocomplete="off">
+                <form>
                     <select id="project" v-model="selectedProject">
                         <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
                         <option v-for="project in projects" :value="project.id">
@@ -89,7 +85,6 @@
                         </option>
                     </select>
                 </form>
-
 
                 <a href="#modal2"><span class="material-symbols-outlined">library_add</span></button>
                 
@@ -114,78 +109,12 @@
         </div>
         </div>
 
-
-        <input type="text" value="{{ user.id }}" name="userid" hidden>
-        <br>
-        Username: {{ user }}<br>
-        User ID: {{ user.id }}<br>
-        wc id: [[ wcId ]]<br>
-        [[ todaysDate ]]<br>
-        TOTAL WC: [[ allWcs ]]<br>
-        <p>Accessed today? [[ accessedToday ]]</p>
-        
-
-            Selected project (using value id): [[ selectedProject ]]
-
-
-            <!-- Project Creation Form -->
-            <!-- PUT INSIDE A MODAL -->
-            <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-container">
-                    <form>
-                        <label for="newProject">Create Project:</label><br>
-                        <input type="text" id="newProject" v-model="newProjectName"><br>
-                        <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                        <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                        <input type="number" id="newProject" v-model="newProjWcGoal"><br>
-                        <button @click.prevent="createProject">Create</button><br>
-                    </form>
-                </div>
-            </div>
-            <br>
-
-            
-
-
-        Project data: [[ projectData ]]<br><br>
-        Selected Project: [[ selectedProject ]]<br>
-        Project id: [[ projectId ]]<br>
-        <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
-            <li>
-                <span :csrftoken="csrfToken" :key="wc.id">
-                    <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
-                    <!-- [[ wc ]]<br> -->
-                    <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
-                    wc data: [[ wc ]]<br>
-                    <br>
-                    Project id: [[ wc.project ]]
-                    <br>
-                    <br>
-                    written on [[ wc.date ]] <br>
-                    wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
-                    <br>[[ wc.todays_wc ]] words<br>
-                    Text area: [[ wc.text_area ]]<br>
-                    Accessed today? [[ wc.accessed_today ]]<br>
-                    Daily wc goal: [[ wc.daily_goal ]]<br>
-                    By: {{ user.username }}
-                </span>
-            </li>
-        </ul>
-
-
-
         {% else %}
         <p>You are not logged in</p>
         <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
-        <!-- <a href="{% url 'login' %}">Log In</a> -->
-        <!-- <p><a href="{% url 'signup' %}"> Sign Up</a></p> -->
         <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>
         {% endif %}
 
 
     </div>
     {% endblock %}
-
-
-</body>
