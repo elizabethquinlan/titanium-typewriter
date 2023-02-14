@@ -149,7 +149,6 @@ new Vue({
                     }
                     // Starting logic of calendar. It's in this function because otherwise it executes before the wordcounts variable has anything
                     if (this.wcByDay === null) {
-                            console.log('it is null')
                             let today = new Date();
                             for (let i = 0; i < 7; i++) {
                                 let day = new Date(today.getTime());
