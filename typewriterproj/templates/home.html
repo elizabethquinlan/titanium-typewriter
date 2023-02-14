@@ -6,7 +6,7 @@
 
     {% if request.user.is_authenticated %}
 
-    <div id="app">
+    <div id="app" class="test">
         <input type="text" value="{{ user.id }}" name="userid" hidden>
 
         <div id="top-nav">
@@ -27,10 +27,11 @@
                 <a href="#modal1"><span class="material-icons">menu</span></button>
                 
                 <div id="modal1">
+                    <a href="#" class="modal-link">Close</a>
+                    <div class="header-modal">
+                        <p>Settings</p>
+                    </div>
                     <div class="modal-container">
-                        <p><a href="#">Close</a></p>
-                        <p class="header-modal">Settings</p>
-                        Hi {{ user.username }}!
                         <p>Daily wordcount goal:</p>
                         <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
                         <p>Today's wc progress:</p>
@@ -79,15 +80,21 @@
 
                 <a href="#modal2"><span class="material-symbols-outlined">library_add</span></button>
                 
-                <div id="modal2"><a href="#">Close</a>
-                    This is the second modal
+                <div id="modal2">
+                    <a href="#" class="modal-link">Close</a>
+                    <div class="header-modal">
+                        <p>Create Project:</p>
+                    </div>
                     <div class="modal-container">
                         <form>
-                            <label for="newProject" class="header-modal">Create Project:</label><br>
-                            <input type="text" id="newProject" v-model="newProjectName"><br>
-                            <input type="date" id="newProject" v-model="newProjStartDate"><br>
-                            <input type="date" id="newProject" v-model="newProjEndDate"><br>
-                            <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                            <p>Project name::</p>
+                            <input type="text" id="newProjectName" v-model="newProjectName"><br>
+                            <p>Start date::</p>
+                            <input type="date" id="newProjStartDate" v-model="newProjStartDate"><br>
+                            <p>End date::</p>
+                            <input type="date" id="newProjEndDate" v-model="newProjEndDate"><br>
+                            <p>Word count goal:</p>
+                            <input type="number" id="newProjWcGoal" v-model="newProjWcGoal"><br>
                             <button @click.prevent="createProject">Create</button><br>
                         </form>
                     </div>
