@@ -8,6 +8,7 @@ class Project(models.Model):
     start_date = models.DateField("today's date", default=datetime.date.today)
     end_date = models.DateField("end date", default=datetime.date.today)
     word_count_goal = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # A user can be associated with multiple daily wordcounts
 
 
     def __str__(self) -> str:

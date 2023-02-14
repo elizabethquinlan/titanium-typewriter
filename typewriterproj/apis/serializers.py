@@ -11,6 +11,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'end_date',
             'word_count_goal',
             'id',
+            'user' # Default is userId
         )
 
 

@@ -54,7 +54,13 @@ new Vue({
         getProj() {
             // This is in case user does not specify a project, we can automatically assign it to this one
             axios.get('/apis/v1/projects/').then(response => {
-                this.projects = response.data
+                // Do for loop over response.data to check for user == username
+                // Append only ones that match (so only run after that)
+                for (let item of response.data) {
+                    if (item.user == this.username) {
+                        this.projects.push(item) // item is individual one that matches
+                    }
+                }
                 this.projectData = response.data.find(project => project.name === 'Unassigned') // Searching for project with this name
                 if (this.projectData !== undefined) {
                     // projectData will either have 'Unassigned' project data or be undefined
@@ -74,7 +80,8 @@ new Vue({
         addDefaultProj() {
             alert("addDefaultProj ran")
             // How can I use this function for user-submitted values, too?
-            axios.post('/apis/v1/addproject/', { // Does not need payload; automatic values exist already
+            axios.post('/apis/v1/addproject/', {
+                'user': this.username, // Does not need payload; automatic values exist already except for user
             }, {
                 headers: { 'X-CSRFToken': this.csrfToken }
             }).then(response => {
@@ -95,7 +102,8 @@ new Vue({
                     'name': this.newProjectName,
                     'start_date': this.todaysDate,
                     'end_date': '2024-11-05',
-                    'word_count_goal': this.newProjWcGoal
+                    'word_count_goal': this.newProjWcGoal,
+                    'user': this.username,
                 }, {
                     headers: { 'X-CSRFToken': this.csrfToken }
                 }).then(response => {

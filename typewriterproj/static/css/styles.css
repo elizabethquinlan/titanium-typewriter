@@ -7,6 +7,16 @@ body {
     overflow-x: hidden;
 }
 
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.date-card {
+display: inline-block;
+}
+
 .shell {
     padding: 0;
     margin: 0;
@@ -39,8 +49,31 @@ body {
     color: white;
     padding: none;
     margin: none;
-    
 }
+
+.form-wrap {
+    border-radius: 4px;
+    padding: 0 5px;
+    background-color: white;
+    position:relative;
+}
+
+.form-wrap label {
+    font-size:8px;
+    text-transform: uppercase;
+    color: #777;
+    padding: 0 8px;  
+    position: absolute;
+    top:6px;
+}
+
+select {
+    background-color: #fff;
+    border: 0px;
+    height: 3rem;
+    font-size: 16px;
+}
+
 
 /* The Modal (background) */
 .modal {
@@ -52,14 +85,14 @@ body {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgb(246, 255, 0); /* Fallback color */
+    background-color: rgba(243, 0, 190, 0.4); /* Black w/ opacity */
 }
 
 
 /* Modal Content/Box */
 .modal-container {
-    background-color: black;
+    background-color: rgb(0, 0, 109);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
@@ -76,8 +109,16 @@ body {
     min-height: 3em;
     min-width: 5em;
     max-width: 10em;
-    background-color: rgb(39 44 53);
+    background-color: rgb(91, 139, 0);
     padding: 20px;
+}
+
+/* Puts the hyperlink/exit button in the upper-right */
+[id^=modal] a {
+    float: right;
+    color: #aaa;
+    float: right;
+    font-weight: bold;
 }
 
 input[type=checkbox] {
@@ -91,14 +132,6 @@ display: block;
 
 #modal2:target {
 display: block;
-}
-
-/* Puts the hyperlink/exit button in the upper-right */
-[id^=modal] a {
-    float: right;
-    color: #aaa;
-    float: right;
-    font-weight: bold;
 }
 
 /* The Close Button */
@@ -193,3 +226,6 @@ select {
     background-color: rgb(21, 28, 38);
 }
 
+a {
+    color: white;
+}

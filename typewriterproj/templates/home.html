@@ -10,26 +10,27 @@
         <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
         <input type="text" value="{{ user.id }}" name="userid" hidden>
 
-        <ul v-for="date in week">
-            <div class="date-card">
-                <li>
+
+        <div class="scrolling-wrapper">
+            <div class="date-card" v-for="date in week">
+                <p>
                     [[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]
-                </li>
+                </p>
     
-                <li>
+                <p>
                     [[ date.toLocaleDateString("en-US", { month: "numeric", day: "numeric" }) ]]
-                </li>
+                </p>
     
-                <li>
+                <p>
                     WC: [[ wcByDay[week.indexOf(date)].todays_wc ]]
-                </li>
+                </p>
     
-                <li v-if=" [[ wcByDay[week.indexOf(date)].todays_wc ]]> 0">
-                    <button @click="wcView(wcByDay[week.indexOf(date)].id)">Display</button><br> Passing wc.id as params -->
-                    If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.</p>
-                </li>
+                <p v-if=" [[ wcByDay[week.indexOf(date)].todays_wc ]]> 0">
+                    <button @click="wcView(wcByDay[week.indexOf(date)].id)">Display</button><br> <!-- Passing wc.id as params -->
+                   <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
+                </p>
             </div>
-        </ul>
+        </div>
 
         <div id="top-nav">
             this is inside the nav/
@@ -39,7 +40,6 @@
                 <a href="#modal1"><span class="material-icons">menu</span></button>
                 
                 <div id="modal1">
-
                     <div class="modal-container">
                         <p><a href="#">Close</a></p>
                         <p class="header-modal">Settings</p>
@@ -77,14 +77,17 @@
                 <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
                 or allow them to enter a new project name. -->
                 <!-- Project Selection Form -->
-                <form>
-                    <select id="project" v-model="selectedProject">
-                        <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
-                        <option v-for="project in projects" :value="project.id">
-                            [[ project.name ]]
-                        </option>
-                    </select>
-                </form>
+                <div class="form-wrap">
+                    <label>Project:</label>
+                    <form>
+                        <select id="project" v-model="selectedProject">
+                            <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
+                            <option v-for="project in projects" :value="project.id">
+                                [[ project.name ]]
+                            </option>
+                        </select>
+                    </form>
+                </div>
 
                 <a href="#modal2"><span class="material-symbols-outlined">library_add</span></button>
                 

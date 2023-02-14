@@ -3,14 +3,34 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-Here are some words.
 
 <div id="app">
-    have to use an axios call using user's ID?
-        <ul v-for="project in projects" >
+    <input type="text" value="{{ user.id }}" name="userid" hidden>
+    <p><a href="/#"><i class="fa-solid fa-arrow-right-from-bracket"></i>Home</a></p>
+
+
+    <br>
+    Username: {{ user }}<br>
+    User ID: {{ user.id }}<br>
+    Username: [[ username ]]
+    [[ todaysDate ]]<br>
+    TOTAL WC: [[ allWcs ]]<br>
+
+    <h1>Projects:</h1>
+    <ul v-for="project in projects" >
+    <li>
+        [[ project ]]
+    </li>
+    </ul><br>
+
+    <h1>Word counts:</h1>
+    <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
         <li>
-            [[ project ]]
+            [[ wc.todays_wc ]] words on [[ wc.date ]]
         </li>
+    </ul>
+
+
 
     </p> 
 </div>
