@@ -7,36 +7,23 @@
     {% if request.user.is_authenticated %}
 
     <div id="app">
-        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
         <input type="text" value="{{ user.id }}" name="userid" hidden>
 
-
-        <div class="scrolling-wrapper">
-            <div class="date-card" v-for="date in week">
-                <p>
-                    [[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]
-                </p>
-    
-                <p>
-                    [[ date.toLocaleDateString("en-US", { month: "numeric", day: "numeric" }) ]]
-                </p>
-    
-                <p>
-                    WC: [[ wcByDay[week.indexOf(date)].todays_wc ]]
-                </p>
-    
-                <p v-if=" [[ wcByDay[week.indexOf(date)].todays_wc ]]> 0">
-                    <button @click="wcView(wcByDay[week.indexOf(date)].id)">Display</button><br> <!-- Passing wc.id as params -->
-                   <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
-                </p>
-            </div>
-        </div>
-
         <div id="top-nav">
-            this is inside the nav/
+            <div class="scrolling-wrapper"> <!-- Start of the calendar stuff -->
+                <div class="date-card" v-for="date in week"><!-- introduce conditional that will display more data for days with wordcounts attached. -->
+                    <div class="day-container">
+                        <div class="weekday">[[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]</div>
+                        <div class="date">[[ date.toLocaleDateString("en-US", { day: "numeric" }) ]]</div>
+                        <span class="tooltip">You wrote [[ wcByDay[week.indexOf(date)].todays_wc ]] words<br>with a daily goal of [[ wcByDay[week.indexOf(date)].daily_goal ]]</span>
+                    </div>
+                    <div v-if="[[ wcByDay[week.indexOf(date)].todays_wc ]]> 0" class="wc-body" @click="wcView(wcByDay[week.indexOf(date)].id)">  <!-- Passing wc.id as params -->
+                        <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
+                        <p>[[ wcByDay[week.indexOf(date)].todays_wc ]] words</p>
+                    </div>
+                </div>
+            </div>
             <div id="content">
-                <p>This is the content-container</p>
-                
                 <a href="#modal1"><span class="material-icons">menu</span></button>
                 
                 <div id="modal1">
@@ -51,6 +38,7 @@
                         <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
                         <p>Your total progress:</p>
                         <p>[[ allWcs ]] words</p>
+                        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
                         <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
                     </div>
                 </div>
@@ -113,6 +101,7 @@
         </div>
 
         {% else %}
+        <h1>Welcome to Titanium Typewriter!</h1>
         <p>You are not logged in</p>
         <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
         <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>

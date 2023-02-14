@@ -18,18 +18,18 @@ new Vue({
         newProjWcGoal: 0,
 
         username: '',
+        csrfToken: null,
+        wordcounts: null,
+        allWcs: 0,
         dailyWC: 1,
         todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
-        wordcounts: null,
+        dailyGoalComplete: false,
+        accessedToday: false, // This is already set to False as default in the Models.py
         textArea: '', // v-model to the textarea in html
         totalWord: 0, // A list with each word as a string for counting words
-        dailyGoal: 0, // User-submitted value v-modeled to html TODO: allow commas?????
-        dailyGoalComplete: false,
+        dailyGoal: 0, // User-submitted value v-modeled to html TODO: allow commas
         progress: 1,
-        allWcs: 0,
-        csrfToken: null,
         wcId: '', // Change to whatever display button is. And then can be passed into wcUpdate
-        accessedToday: false, // This is already set to False as default in the Models.py
 
         week: [],
         filteredWcs: null,

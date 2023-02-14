@@ -8,17 +8,102 @@ body {
     overflow-x: hidden;
 }
 
+#top-nav {
+    margin: 0;
+    background-color: rgb(57, 61, 70);
+    display: flex;
+}
+
 .scrolling-wrapper {
+    width: 88vw;
+    background-color: rgb(57, 61, 70);
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
+    display: flex;
 }
 
 .date-card {
-display: inline-block;
+    background-color: rgb(21, 28, 38);
+    margin: 8px 5px; /* topbottom leftright*/
+    text-transform: uppercase;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
-.shell {
+.wc-body {
+    margin-left: 10px;
+    text-transform: lowercase;
+}
+
+#content,
+.date-card {
+    border: 1.5px solid rgb(105 111 120);
+    padding: .3rem;
+    border-radius: 8px;
+    width: auto;
+    height: auto;
+}
+
+.wc-body:hover {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.date-card .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+#content {
+    padding: 1rem;
+    margin-left: 10px;
+    background-color: black;
+    align-self: center;
+}
+
+.tooltip {
+    text-transform: lowercase;
+}
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.date-card:hover .tooltip {
+    visibility: visible;
+    cursor: pointer;
+}
+
+.day-container {
+    background-color: rgb(73 54 86);
+    border: 1px solid rgb(105 111 120);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.weekday {
+    padding-top: .5rem;
+    font-size: 10px;
+}
+
+.shell { /* For the progress bar. */
     padding: 0;
     margin: 0;
     height: 20px;
@@ -40,17 +125,6 @@ display: inline-block;
     font-size: 0.7em
 }
 
-#top-nav {
-    padding: 1rem;
-    margin: 0;
-    background-color: red;
-}
-
-#myBtn {
-    color: white;
-    padding: none;
-    margin: none;
-}
 
 .form-wrap {
     border-radius: 4px;
