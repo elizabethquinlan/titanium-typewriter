@@ -24,6 +24,67 @@ Put this back in laterr
 
 
 
+<br>
+Username: {{ user }}<br>
+User ID: {{ user.id }}<br>
+wc id: [[ wcId ]]<br>
+[[ todaysDate ]]<br>
+TOTAL WC: [[ allWcs ]]<br>
+<p>Accessed today? [[ accessedToday ]]</p>
+
+
+    Selected project (using value id): [[ selectedProject ]]
+
+
+    <!-- Project Creation Form -->
+    <!-- PUT INSIDE A MODAL -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-container">
+            <form>
+                <label for="newProject">Create Project:</label><br>
+                <input type="text" id="newProject" v-model="newProjectName"><br>
+                <input type="date" id="newProject" v-model="newProjStartDate"><br>
+                <input type="date" id="newProject" v-model="newProjEndDate"><br>
+                <input type="number" id="newProject" v-model="newProjWcGoal"><br>
+                <button @click.prevent="createProject">Create</button><br>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    
+
+
+Project data: [[ projectData ]]<br><br>
+Selected Project: [[ selectedProject ]]<br>
+Project id: [[ projectId ]]<br>
+<ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
+    <li>
+        <span :csrftoken="csrfToken" :key="wc.id">
+            <button @click="wcView(wc.id)">Display</button><br> <!-- Passing wc.id as params -->
+            <!-- [[ wc ]]<br> -->
+            <!-- <p v-if="[[ wc.project_name ]] != '' ">Project: [[ wc.project_name ]]</p> -->
+            wc data: [[ wc ]]<br>
+            <br>
+            Project id: [[ wc.project ]]
+            <br>
+            <br>
+            written on [[ wc.date ]] <br>
+            wc id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
+            <br>[[ wc.todays_wc ]] words<br>
+            Text area: [[ wc.text_area ]]<br>
+            Accessed today? [[ wc.accessed_today ]]<br>
+            Daily wc goal: [[ wc.daily_goal ]]<br>
+            By: {{ user.username }}
+        </span>
+    </li>
+</ul>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,3 +97,104 @@ Put this back in laterr
     <script src="{% static 'js/app.js' %}" defer></script> <!-- include JS file -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
+
+
+
+<form id="project-form">
+  <label for="projectSelect">Assign to project:</label>
+
+  <div class="form-group">
+      <input type="text" class="form-control" id="project-name" placeholder="Enter project name">
+      <select class="form-control" id="project-select">
+        <option value="">Select a project</option>
+        <option v-for="project in projects" :value="project.id">[[ project.name ]]</option>
+      </select>
+  </div><br><br>
+  
+  <select v-model="newProjectName">
+  <option v-for="project in projects" :value="project.id">
+      [[ project.name ]]
+    </option>
+  </select><br><br>
+
+  <div>
+      <!-- <input type="text" v-model="selectedProject" @input="updateProject"/> -->
+      <datalist id="projects">
+        <option v-for="project in projects" :value="project.name"></option>
+      </datalist>
+  </div><br><br>
+
+  <input type="text" id="project-name" v-model="newProjectName">
+  <button type="submit">Submit</button>
+</form>
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn"><span class="material-icons">menu</span></button>
+
+<!-- The Modal -->
+<div id="Modal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Daily wordcount goal:</p>
+        <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+        <p>Today's wc progress:</p>
+        <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+        <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+        <p>Your total progress:</p>
+        <p>[[ allWcs ]] words</p>
+    </div>
+</div>
+
+
+<div class="calendar">
+  <div class="calendar-header">
+      <div v-for="day in week" :key="day.date">
+          [[ day.date ]]: [[ day.wordcount.count ]]
+      </div>
+      <p v-for="day in week">[[ day.toLocaleDateString() ]]</p>
+  </div>
+</div>
+
+
+
+
+    <!-- Project data: [[ projectData ]]<br><br>
+    Selected Project: [[ selectedProject ]]<br>
+    Project id: [[ projectId ]]<br>
+    <ul v-for="wc in wordcounts" > .reverse so most recent item shows up on top 
+        <li>
+            <span :csrftoken="csrfToken" :key="wc.id">
+                <button @click="wcView(wc.id)">Display</button><br> Passing wc.id as params
+                wc data: [[ wc ]]<br>
+                <br>
+                Project id: [[ wc.project ]]
+                <br>
+                <br>
+                written on [[ wc.date ]] <br>
+                wc id: <span id="wc_id">[[ wc.id ]]</span> putting wc_id in scope so it can be passed as params
+                <br>[[ wc.todays_wc ]] words<br>
+                Text area: [[ wc.text_area ]]<br>
+                Accessed today? [[ wc.accessed_today ]]<br>
+                Daily wc goal: [[ wc.daily_goal ]]<br>
+                By: {{ user.username }}
+            </span>
+        </li>
+    </ul> -->
+
+            <!-- <p v-for="date in wcByDay">
+                [[ date ? date.id : 'No data']] -
+            </p><br> -->
+        
+    <!-- <div>
+        <div v-for="day in weekdays">
+          [[ day.toLocaleDateString() ]]
+        </div>
+    </div> -->
+            <!--         
+        The wordcounts object: <br>
+        [[ wordcounts ]]<br>
+        [[ week ]]
+        <br>
+        GENEARTE DATES START:<br>
+        GENERATE DATES END<br> -->

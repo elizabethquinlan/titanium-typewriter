@@ -1,24 +1,33 @@
-from writingapp.models import DailyWc
-from .serializers import DailyWcSerializer
-from django.http import Http404
-from rest_framework import status
+from writingapp.models import DailyWc, Project
+from .serializers import DailyWcSerializer, ProjectSerializer
 from rest_framework import generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 
+# path('', WcAPIView.as_view()),
 class WcAPIView(generics.ListAPIView):
     serializer_class = DailyWcSerializer
     def get_queryset(self):
+        # print(f"This is the WcAPIView path at '' {self.request.user}") # Just the user's name
         return DailyWc.objects.filter(user=self.request.user) # django is aware of what user is logged in and so will only retrieve data for that user.
 
 
+# path('new/', AddWc.as_view()),
 class AddWc(generics.CreateAPIView):
     serializer_class = DailyWcSerializer
 
 
+# path('<int:pk>/', WcView.as_view()),
 class WcView(generics.RetrieveUpdateDestroyAPIView):
     queryset = DailyWc.objects.all()
     serializer_class = DailyWcSerializer
 
+
+# path('addproject/', AddProject.as_view()),
+class AddProject(generics.CreateAPIView):
+    serializer_class = ProjectSerializer
+
+
+# path('projects/', ProjectsView.as_view())
+class ProjectsView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer

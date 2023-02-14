@@ -19,6 +19,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('writingapp/', include('writingapp.urls')),
+    path('stats/', include('writingapp.urls')), # For looking at the statistics of the user/dailywcs.
     path('', include('writingapp.urls')),
     path('accounts/', include("accounts.urls")), # for handling registering new accounts
     path("accounts/", include("django.contrib.auth.urls")), # for authorization

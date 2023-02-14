@@ -4,79 +4,116 @@
 
 {% block content %}
 
-<body>
     {% if request.user.is_authenticated %}
-    <div id="app">
+
+    <div id="app" class="test">
+        <input type="text" value="{{ user.id }}" name="userid" hidden>
+
+        <div id="top-nav">
+            <div class="scrolling-wrapper"> <!-- Start of the calendar stuff -->
+                <div class="date-card" v-for="date in week"><!-- introduce conditional that will display more data for days with wordcounts attached. -->
+                    <div class="day-container">
+                        <div class="weekday">[[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]</div>
+                        <div class="date">[[ date.toLocaleDateString("en-US", { day: "numeric" }) ]]</div>
+                        <span class="tooltip">You wrote [[ wcByDay[week.indexOf(date)].todays_wc ]] words<br>with a daily goal of [[ wcByDay[week.indexOf(date)].daily_goal ]]</span>
+                    </div>
+                    <div v-if="[[ wcByDay[week.indexOf(date)].todays_wc ]]> 0" class="wc-body" @click="wcView(wcByDay[week.indexOf(date)].id)">  <!-- Passing wc.id as params -->
+                        <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
+                        <p>[[ wcByDay[week.indexOf(date)].todays_wc ]] words</p>
+                    </div>
+                </div>
+            </div>
+            <div id="content">
+                <a href="#modal1"><span class="material-icons">menu</span></button>
+                
+                <div id="modal1">
+                    <a href="#" class="modal-link">Close</a>
+                    <div class="header-modal">
+                        <p>Settings</p>
+                    </div>
+                    <div class="modal-container">
+                        <p>Daily wordcount goal:</p>
+                        <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                        <p>Today's wc progress:</p>
+                        <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                        <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                        <p>Your total progress:</p>
+                        <p>[[ allWcs ]] words</p>
+                        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
+                        <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-        <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
-            <li>
-                <span :csrftoken="csrfToken" :key="wc.id">
-                    <button @click="wcView(wc.id)">Display</button> <!-- Passing wc.id as params -->
-                    <!-- [[ wc ]]<br> -->
-                    <br>Project: [[ wc.project_name ]]<br>
-                    written on [[ wc.date ]] <br>
-                    id: <span id="wc_id">[[ wc.id ]]</span> <!-- putting wc_id in scope so it can be passed as params -->
-                    <br>[[ wc.todays_wc ]] words<br>
-                    [[ wc.accessed_today ]]<br>
-                    By: {{ user.username }}
-                </span>
-            </li>
-        </ul>
-
-        {{ todays_wc }}
-
-        {% for wc in user.wordcounts %}
-        [[ user.username ]]
-        {% endfor %}
-
-        [[ todaysDate ]]<br>
-        TOTAL WC: [[ allWcs ]]<br>
-        
-        <!-- <button @click="addWc()">Add wc ✅</button> -->
-        
-        <button @click="createUpdate(wcId)">This will update or create depending on params</button>
-
-        <!-- remember: Vue delimiters are [[ ]] -->
-        <label for="textbody">Enter Text:</label>
-        <br/>
-        <!-- needs to have an endpoint that is just today's text blob. -->
-        <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
-        <div>Total words: [[ dailyWC ]]</div>
-        <p>wc id: [[ wcId ]] </p>
-        <p>Accessed today? [[ accessedToday ]]</p>
-        
-        <p>[[ projectName ]]</p>
-        <input v-model="projectName" placeholder="add a tag..." />
-        
-        <!-- If user's daily goal has been finished, dailygoalcomplete=complete -->
-        <p>Daily goal: <input
-            type="text"
-            v-model="dailyGoal"
-            placeholder="Text"
-          /> words </p> <!-- If you want this to change every day, you have to have it attached to the Data Model-->
         <div class="shell">
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
                 <span>[[ progress ]]%</span>
             </div>
         </div>
+
+        <!-- needs to have an endpoint that is just today's text blob. -->
+        <div class="text-field">
+            <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
+            <div class="wordcount">[[ dailyWC ]] words</div>
+        </div>
+
+        <div id="bottom-nav">
+
+            <div id="project-content">
+                <!-- This is the content-container for second modal -->
+                <!-- When the user creates a new word count, you can either include a dropdown with all the available projects for them to select from,
+                or allow them to enter a new project name. -->
+                <!-- Project Selection Form -->
+                <div class="form-wrap">
+                    <label>Project:</label>
+                    <form>
+                        <select id="project" v-model="selectedProject">
+                            <!-- v-model will ignore the initial value, checked or selected attributes found on any form elements. It will always treat the Vue instance data as the source of truth.  -->
+                            <option v-for="project in projects" :value="project.id">
+                                [[ project.name ]]
+                            </option>
+                        </select>
+                    </form>
+                </div>
+
+                <a href="#modal2"><span class="material-symbols-outlined">library_add</span></button>
+                
+                <div id="modal2">
+                    <a href="#" class="modal-link">Close</a>
+                    <div class="header-modal">
+                        <p>Create Project:</p>
+                    </div>
+                    <div class="modal-container">
+                        <form>
+                            <p>Project name::</p>
+                            <input type="text" id="newProjectName" v-model="newProjectName"><br>
+                            <p>Start date::</p>
+                            <input type="date" id="newProjStartDate" v-model="newProjStartDate"><br>
+                            <p>End date::</p>
+                            <input type="date" id="newProjEndDate" v-model="newProjEndDate"><br>
+                            <p>Word count goal:</p>
+                            <input type="number" id="newProjWcGoal" v-model="newProjWcGoal"><br>
+                            <button @click.prevent="createProject">Create</button><br>
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+
+        <div>
+            <button @click="createUpdate(wcId)">Save</button>
+        </div>
+        </div>
+
+        {% else %}
+        <h1>Welcome to Titanium Typewriter!</h1>
+        <p>You are not logged in</p>
+        <p><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log In</a></p>
+        <p><a href="{% url 'signup' %}"><i class="fa-regular fa-pen-to-square"></i> Sign Up</a></p>
         {% endif %}
 
-        
 
     </div>
-
-
-
-    {% if user.is_authenticated %}
-    Hi {{ user.username }}!
-    <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <p><a href="{% url 'signup' %}"> Sign Up</a></p>
-    {% endif %}
     {% endblock %}
-
-
-</body>

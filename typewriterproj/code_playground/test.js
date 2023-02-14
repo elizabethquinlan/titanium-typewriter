@@ -93,3 +93,150 @@ createUpdate() {
 // },
 
 // todaysDate: `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`,
+
+
+// createUpdate(wcId) {
+//     // If this is false AND it's today's date.
+//     // Means you didn't access it today yet and can create a new instance.
+//     if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
+//     {axios.post('/apis/v1/new/', {
+//         'project': 54,
+//         // 'project': 33,
+//         //'project': this.projectData, // this needs to be more complicated...
+//         // 'project': {
+//         //     // THIS CREATES A NEW PROJECT?? INSTEAD OF ADDING TO EXISTING ONE?
+//         //     //'id': 16, //completely ignored this lol
+//         //     'id': this.projectId,
+//         //     'name': this.projectName,
+//         //     'start_date': this.projectStartDate,
+//         //     'end_date': this.projectEndDate,
+//         //     'word_count_goal': this.projectWcGoal
+//         // },
+//         'todays_wc': this.dailyWC,
+//         'text_area': this.textArea,
+
+// Get the modal
+// var modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// // When the user clicks on the button, open the modal
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
+
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
+
+
+// IDK WHAT THIS DOES ANYMORE:
+// calendarRows() {
+//     for (let i = 0; i < this.dates.length; i++) {
+//       if (i % 7 === 0 && i !== 0) {
+//         this.rows.push(this.row);
+//       }
+//       this.row.push(this.dates[i]);
+//       if (i === this.dates.length - 1) {
+//         this.rows.push(row);
+//       }
+//     }
+//     return this.rows;
+// }
+
+// wordcountsInWeek() {
+//     const week = this.weekdays;
+//     const wordcountsArray = Object.values(this.wordcounts);
+//     return wordcountsArray.filter(wordcount => {
+//       return week.some(day => {
+//         return day.toDateString() === new Date(wordcount.date).toDateString();
+//       });
+//     });
+// },
+
+
+// GOOD FOR MONTHLY:
+// generateDates() {
+//     this.numDays = new Date(this.year, this.month + 1, 0).getDate();
+//     this.dates = [];
+//     for (let i = 1; i <= this.numDays; i++) {
+//         this.dates.push(new Date(this.year, this.month, i));
+//     }
+    
+//     this.year = 2022; // hardcoded for now.
+//     this.month = 2; // January
+//     // this.dates = generateDates(this.year, this.month)
+//     return this.dates;
+// },
+
+// year: 2022,
+// month: 0,
+// dates: [],
+// dateWordCounts: {},
+// daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+// rows: [],
+// row: [],
+// numDays: null,
+// dates: [],
+
+
+     // creating a new date object from today's date
+     const today = new Date()
+     const dict = {}
+     // const newWordcounts = Object.entries(this.wordcounts).reduce((acc, [key, value]) => {
+     //     const date = new Date(key);
+     //     if (date >= start && date <= end) {
+     //       acc[date.toDateString()] = value;
+     //     }
+     //     return acc;
+     // }, {});
+
+// for (let i = 0; i < 7; i++) {
+//     const day = new Date(start);
+//     week.push({
+//     date: new Date(day.setDate(day.getDate() + i)),
+//     wordcount: newWordcounts[day.toDateString()]
+//     });
+//     // Automatically pair it with correct object
+//     // Creating dict
+//     // key(date): value(data)
+//     // If data.date == this.day:
+//     let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
+//     // put them together
+//     // sets the date to the current day minus today's day of the week plus the current loop iteration
+//     this.day = new Date(today)
+//     this.day.setDate(this.day.getDate() - today.getDay() + i)
+//     this.week.push(this.day)
+//     return this.week
+
+
+// For each weekday, search wordcounts list for matching date
+// 
+// wordcountsInWeek() {
+//     return "Hello world"
+    // return this.week.map(day => {
+    //     //logic here for how to map wordcount object based on date
+    //     let variable = this.wordcounts.filter(wc => {
+    //         // Looking for the date property
+    //         return wc.date == day
+    //     })
+    //     console.log(variable)
+    // })
+
+
+
+//     console.log(typeof this.week) // object
+//     return this.week.reverse();
+// }
