@@ -33,11 +33,8 @@ class DailyWcSerializer(serializers.ModelSerializer):
         project = Project.objects.filter(name='Unassigned').filter(user=userid.id)
 
         if len(project) == 0:
-            print(project_data)
-            print('words' * 100)
             project = Project.objects.create(**project_data)
 
-        print(validated_data)
         dailywc = DailyWc.objects.create(project=project[0], **validated_data, user=userid)
-        print(f'The custom create is working. {dailywc} is the daily wordcount. Project data: {project_data}. Project: {project[0]}')
+        # print(f'The custom create isworking. {dailywc} is the daily wordcount. Project data: {project_data}. Project: {project[0]}')
         return dailywc

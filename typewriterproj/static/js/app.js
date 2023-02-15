@@ -108,7 +108,6 @@ new Vue({
                 }).then(response => {
                   this.projects.push(response.data);
                   this.newProjectName = '';
-                  this.getProj()
                 })
             } else {
                 // This payload includes all user-submitted values
@@ -116,13 +115,13 @@ new Vue({
                     'name': this.newProjectName,
                     'start_date': this.newProjStartDate,
                     'end_date': this.newProjEndDate,
-                    'word_count_goal': this.newProjWcGoal
+                    'word_count_goal': this.newProjWcGoal,
+                    'user': this.username,
                 }, {
                     headers: { 'X-CSRFToken': this.csrfToken }
                 }).then(response => {
                   this.projects.push(response.data);
                   this.newProjectName = '';
-                  this.getProj()
                 })
             }
         },

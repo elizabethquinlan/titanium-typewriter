@@ -88,7 +88,6 @@ p {
     text-transform: lowercase;
 }
 
-
 /* Show the tooltip text when you mouse over the tooltip container */
 .date-card:hover .tooltip {
     visibility: visible;
@@ -107,6 +106,8 @@ p {
     padding-top: .5rem;
     font-size: 10px;
 }
+
+
 
 .shell { /* For the progress bar. */
     padding: 0;
