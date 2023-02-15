@@ -33,13 +33,13 @@
                     </div>
                     <div class="modal-container">
                         <p>Daily wordcount goal:</p>
-                        <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p>
+                        <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p><br>
                         <p>Today's wc progress:</p>
                         <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
-                        <p v-else>[[ dailyWC ]] word(s)</p> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                        <p v-else>[[ dailyWC ]] word(s)</p><br> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
                         <p>Your total progress:</p>
-                        <p>[[ allWcs ]] words</p>
-                        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p>
+                        <p>[[ allWcs ]] words</p><br>
+                        <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p><br>
                         <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
                     </div>
                 </div>
@@ -87,15 +87,15 @@
                     </div>
                     <div class="modal-container">
                         <form>
-                            <p>Project name::</p>
-                            <input type="text" id="newProjectName" v-model="newProjectName"><br>
-                            <p>Start date::</p>
+                            <p>Project name:</p>
+                            <input type="text" id="newProjectName" v-model="newProjectName">
+                            <br><br><p>Start date:</p>
                             <input type="date" id="newProjStartDate" v-model="newProjStartDate"><br>
-                            <p>End date::</p>
+                            <br><p>End date:</p>
                             <input type="date" id="newProjEndDate" v-model="newProjEndDate"><br>
-                            <p>Word count goal:</p>
+                            <br><p>Word count goal:</p>
                             <input type="number" id="newProjWcGoal" v-model="newProjWcGoal"><br>
-                            <button @click.prevent="createProject">Create</button><br>
+                            <br><button @click.prevent="createProject">Create</button><br>
                         </form>
                     </div>
                 </div>
