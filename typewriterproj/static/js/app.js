@@ -39,9 +39,9 @@ new Vue({
     mounted() {
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
+        this.getProj()
     },
     created() {
-        this.getProj()
         this.getWc()
     },
     methods: {
@@ -61,7 +61,7 @@ new Vue({
                         this.projects.push(item) // item is individual one that matches
                     }
                 }
-                this.projectData = response.data.find(project => project.name === 'Unassigned') // Searching for project with this name
+                this.projectData = this.projects.find(project => project.name === 'Unassigned') // Searching for project with this name
                 if (this.projectData !== undefined) {
                     // projectData will either have 'Unassigned' project data or be undefined
                     // if there is something in projectData, assign variables using that
@@ -78,7 +78,6 @@ new Vue({
             })
         },
         addDefaultProj() {
-            alert("addDefaultProj ran")
             // How can I use this function for user-submitted values, too?
             axios.post('/apis/v1/addproject/', {
                 'user': this.username, // Does not need payload; automatic values exist already except for user
