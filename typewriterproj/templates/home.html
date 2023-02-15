@@ -117,7 +117,7 @@
         <p>You can: Create daily goals, add wordcounts to projects, and view your progress on a statistics page.</p>
         <hr>
         <div class="scrolling-wrapper"> <!-- Start of the calendar stuff -->
-            <div class="date-card"><!-- introduce conditional that will display more data for days with wordcounts attached. -->
+            <div class="date-card">
                 <div class="day-container">
                     <div class="weekday">Wed</div>
                     <div class="date">15</div>
@@ -128,10 +128,41 @@
                     <p>10 words</p>
                 </div>
             </div>
-            <div class="date-card"><!-- introduce conditional that will display more data for days with wordcounts attached. -->
+            <div class="date-card">
                 <div class="day-container">
                     <div class="weekday">Tue</div>
                     <div class="date">14</div>
+                    <span class="tooltip">You wrote 0 words<br>with a daily goal of 0.</span>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="day-container">
+                    <div class="weekday">Mon</div>
+                    <div class="date">13</div>
+                    <span class="tooltip">You wrote 100 words<br>with a daily goal of 100.</span>
+                </div>
+                <div class="wc-body">
+                    <p>100 words</p>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="day-container">
+                    <div class="weekday">Sun</div>
+                    <div class="date">12</div>
+                    <span class="tooltip">You wrote 0 words<br>with a daily goal of 0.</span>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="day-container">
+                    <div class="weekday">Sat</div>
+                    <div class="date">11</div>
+                    <span class="tooltip">You wrote 0 words<br>with a daily goal of 0.</span>
+                </div>
+            </div>
+            <div class="date-card">
+                <div class="day-container">
+                    <div class="weekday">Fri</div>
+                    <div class="date">10</div>
                     <span class="tooltip">You wrote 0 words<br>with a daily goal of 0.</span>
                 </div>
             </div>
@@ -180,6 +211,8 @@
         </div>
         <p>Your wordcounts automatically get added to the "Unassigned" project.</p>
         <p>But you can click on the add button right next to it (<span class="material-symbols-outlined">library_add</span>) to create your own project to add daily wordcounts to!</p>
+        <br>
+        <br>
         {% endif %}
 
 
