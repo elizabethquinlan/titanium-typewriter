@@ -12,21 +12,27 @@
     <br>
     Username: {{ user }}<br>
     User ID: {{ user.id }}<br>
-    Username: [[ username ]]
+    Username: [[ username ]]<br>
     [[ todaysDate ]]<br>
     TOTAL WC: [[ allWcs ]]<br>
 
     <h1>Projects:</h1>
     <ul v-for="project in projects" >
-    <li>
-        [[ project ]]
-    </li>
+        <li><h2>[[ project.name ]]</h2></li>
+        <li>Started on: [[project.start_date ]]</li>
+        <li>End date: [[project.end_date ]]</li>
+        <span v-for="wc in wordcounts" >
+            <li v-if="wc.project == project.id">
+                [[ wc.todays_wc ]] words written on [[ wc.date ]]
+            </li>
+        </span>
+        <hr>
     </ul><br>
 
     <h1>Word counts:</h1>
     <ul v-for="wc in wordcounts" > <!-- .reverse so most recent item shows up on top -->
         <li>
-            [[ wc.todays_wc ]] words on [[ wc.date ]]
+            [[ wc.todays_wc ]] words on [[ wc.date ]] with a daily goal of [[ wc.daily_goal ]]
         </li>
     </ul>
 

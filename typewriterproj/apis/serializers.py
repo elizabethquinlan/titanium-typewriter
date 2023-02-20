@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 from writingapp.models import DailyWc, Project
 
 
@@ -26,13 +27,14 @@ class DailyWcSerializer(serializers.ModelSerializer):
     # to explicitly specify how the child relationships should be saved.
     def create(self, validated_data):
         project_data = validated_data.pop('project')
+        user = validated_data.pop('user')
+        userid = User.objects.get(username=user)
+        
+        project = Project.objects.filter(name='Unassigned').filter(user=userid.id)
 
-        try:
-            # checking if a project named "Unassigned" exists
-            #  if it does, using that project instance as the foreign key for the new DailyWc instance
-            project = Project.objects.get(name='Unassigned')
-        except Project.DoesNotExist:
+        if len(project) == 0:
             project = Project.objects.create(**project_data)
-        dailywc = DailyWc.objects.create(project=project, **validated_data)
-        print(f'The custom create is working. {dailywc} is the daily wordcount. Project data: {project_data}. Project: {project}')
+
+        dailywc = DailyWc.objects.create(project=project[0], **validated_data, user=userid)
+        # print(f'The custom create isworking. {dailywc} is the daily wordcount. Project data: {project_data}. Project: {project[0]}')
         return dailywc
