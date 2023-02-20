@@ -37,7 +37,6 @@ new Vue({
         wcByDay: null,
     },
     mounted() {
-        alert(this.todaysDate)
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
         this.getProj()
@@ -190,7 +189,6 @@ new Vue({
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool
                 },
-                alert(this.todaysDate)
             )
         },
         createUpdate(wcId) {
