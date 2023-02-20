@@ -22,7 +22,7 @@ new Vue({
         wordcounts: null,
         allWcs: 0,
         dailyWC: 1,
-        todaysDate: `${new Date().toLocaleDateString('en-CA')}`, // 31/01/2023
+        todaysDate: `${new Date().toISOString().slice(0, 10)}`,
         dailyGoalComplete: false,
         accessedToday: false, // This is already set to False as default in the Models.py
         textArea: '', // v-model to the textarea in html
@@ -37,6 +37,7 @@ new Vue({
         wcByDay: null,
     },
     mounted() {
+        alert(this.todaysDate)
         this.username = document.querySelector('input[name=userid]').value // retrieving the primary key
         this.csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value
         this.getProj()
@@ -97,7 +98,7 @@ new Vue({
             if (this.newProjStartDate == null && this.newProjEndDate == null)
             {
                 // This payload includes some default-assigned values
-                axios.post('/apis/v1/addproject/', { 
+                axios.post('/apis/v1/addproject/', {
                     'name': this.newProjectName,
                     'start_date': this.todaysDate,
                     'end_date': '2024-11-05',
@@ -188,13 +189,14 @@ new Vue({
                     this.wcId = response.data.id
                     this.dailyGoal = response.data.daily_goal
                     this.dailyGoalComplete = response.data.daily_goal_bool
-                }
+                },
+                alert(this.todaysDate)
             )
         },
         createUpdate(wcId) {
             // If this is false AND it's today's date.
             // Means you didn't access it today yet and can create a new instance.
-            if (!this.accessedToday && this.todaysDate == `${new Date().toLocaleDateString('en-CA')}`) 
+            if (!this.accessedToday && this.todaysDate == `${new Date().toISOString().slice(0, 10)}`) 
             {
                 if (this.selectedProject == null)
                 {
