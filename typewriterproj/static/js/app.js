@@ -131,7 +131,7 @@ new Vue({
                     this.wordcounts = response.data
                     // alert(JSON.stringify(this.wordcounts));
                     // When the page mounts, filter down to date that is today's date.
-                    let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toLocaleDateString('en-CA')}`)
+                    let todaysWC = this.wordcounts.filter(wc => wc.date == `${new Date().toISOString().slice(0, 10)}`)
                     this.allWcs = this.wordcounts.reduce((acc, wordcount) => acc + wordcount.todays_wc, 0);
                     //  If such a thing exists and array isn't empty, update the variables on the page
                     if (todaysWC.length > 0 && this.todaysDate == todaysWC[0].date){ // Other functions also call this function, so to keep this from running and filling all fields with today's text, this conditional checks and makes sure the data is really for the present day.
@@ -181,7 +181,8 @@ new Vue({
             // TODO: If user switches to this without creating an instance of today, how do I handle that? Can I auto make one here?
             // Populates the page with data corresponding to what is stored in database under the given id
             axios.get(`/apis/v1/${wcId}`).then(response => 
-                    {this.textArea = response.data.text_area
+                {
+                    this.textArea = response.data.text_area
                     this.projectId = response.data.project
                     this.dailyWC = response.data.todays_wc
                     this.todaysDate = response.data.date
