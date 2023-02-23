@@ -20,18 +20,33 @@ p {
 
 #top-nav {
     margin: 0;
+    border: 0;
+    padding: 0;
     background-color: rgb(57, 61, 70);
     overflow-x: hidden;
     width: 100vw;
+    vertical-align: baseline;
+}
+
+#top-nav-wrapper {
     display: flex;
 }
 
 .scrolling-wrapper {
     width: 88vw;
     background-color: rgb(57, 61, 70);
-    overflow-x: scroll;
+    height: 45px;
     overflow-y: hidden;
-    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.timeline {
+    width: 100vw;
+    float: left;
+    position: relative;
+    height: 40px;
+    height: auto;
+    margin-bottom: -5px;
     display: flex;
 }
 
@@ -154,10 +169,10 @@ button:hover {
 }
 
 .form-wrap label {
-    font-size:8px;
+    font-size: 10px;
+    padding-left: 8px;
     text-transform: uppercase;
     color: #777;
-    padding: 0 8px;  
     position: absolute;
     top:6px;
 }
