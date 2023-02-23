@@ -12,6 +12,12 @@ p {
     font-size: 20px;
 }
 
+.words {
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+}
+
 #top-nav {
     margin: 0;
     background-color: rgb(57, 61, 70);
@@ -107,7 +113,17 @@ p {
     font-size: 10px;
 }
 
+button {
+    padding: 10px;
+    font-size: 15;
+    border-radius: 5px;
+}
 
+button:hover {
+    background-color: white;
+    cursor: pointer;
+    border: 2px solid rgb(33 33 33);
+}
 
 .shell { /* For the progress bar. */
     padding: 0;
