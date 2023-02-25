@@ -36,8 +36,8 @@ p {
     width: 88vw;
     background-color: rgb(57, 61, 70);
     height: 45px;
-    overflow-y: hidden;
-    overflow-x: scroll;
+    /* overflow-y: hidden;
+    overflow-x: scroll; */
 }
 
 .timeline {
