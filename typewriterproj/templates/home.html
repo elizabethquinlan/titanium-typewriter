@@ -13,23 +13,64 @@
         <div class="top-nav">
             <div class="top-nav-wrapper">
                 <div class="scrolling-wrapper">
-                  <div class="card">
+                    <div class="card">
                       <div class="day-container">
                         <div class="weekday">Mon</div>
                         <div class="date">27</div>
                       </div>
                     </div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
-                  <div class="card"><h2>Card</h2></div>
+                    <div class="card">
+                      <div class="day-container">
+                        <div class="weekday">Sun</div>
+                        <div class="date">26</div>
+                      </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-container">
+                            <div class="day-container">
+                                <div class="weekday">Sat</div>
+                                <div class="date">25</div>
+                            </div>
+                            <div class="wc-body" @click="wcView(wcByDay[week.indexOf(date)].id)">
+                                <p class="words">10 words</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-container">
+                            <div class="day-container">
+                                <div class="weekday">Fri</div>
+                                <div class="date">24</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                      <div class="day-container">
+                        <div class="weekday">Thu</div>
+                        <div class="date">23</div>
+                      </div>
+                    </div>
                 </div>
                 <div id="content">
-                    Drop-down menu here
+                    <a href="#modal1"><span class="material-icons">menu</span></button>
+
+                    <div id="modal1">
+                        <a href="#" class="modal-link">Close</a>
+                        <div class="header-modal">
+                            <p>Settings</p>
+                        </div>
+                        <div class="modal-container">
+                            <p>Daily wordcount goal:</p>
+                            <p><input type="number" v-model="dailyGoal" placeholder="Text"/> words</p><br>
+                            <p>Today's wc progress:</p>
+                            <p v-if=" [[ dailyGoal ]] > 0">[[ dailyWC ]]/[[ dailyGoal ]] word(s)</p>
+                            <p v-else>[[ dailyWC ]] word(s)</p><br> <!-- Add some edgecasing for if the # is > 1 (word/words)-->
+                            <p>Your total progress:</p>
+                            <p>[[ allWcs ]] words</p><br>
+                            <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p><br>
+                            <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
+                        </div>
+                    </div>
                 </div>
            </div>
         </div>
