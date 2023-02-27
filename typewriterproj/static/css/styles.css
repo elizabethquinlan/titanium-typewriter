@@ -1,11 +1,13 @@
+* {
+    padding: 0;
+}
+
 body, html {
     background-color: rgb(21, 28, 38);
     color: white;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    width: 100vw;
-    height: 100vh
 }
 
 p {
@@ -18,53 +20,41 @@ p {
     margin: 0;
 }
 
-#top-nav {
+.wc-body {
+    margin-left: 10px;
+    text-transform: lowercase;
+}
+
+/* Top-nav stuff starts here */
+.scrolling-wrapper,
+.card {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.card {
+    display: inline-block;
+    width: 150px;
+    height: 75px;
+}
+
+.scrolling-wrapper {
+    height: 80px;
+    margin-bottom: 20px;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+.top-nav {
     margin: 0;
     border: 0;
     padding: 0;
     background-color: rgb(57, 61, 70);
-    overflow-x: hidden;
-    width: 100vw;
-    vertical-align: baseline;
 }
 
-#top-nav-wrapper {
+.top-nav-wrapper {
     display: flex;
-}
-
-.scrolling-wrapper {
-    width: 88vw;
-    background-color: rgb(57, 61, 70);
-    height: 45px;
-    /* overflow-y: hidden;
-    overflow-x: scroll; */
-}
-
-.timeline {
-    width: 100vw;
-    float: left;
-    position: relative;
-    height: 40px;
-    height: auto;
-    margin-bottom: -5px;
-    display: flex;
-}
-
-.date-card {
-    margin: 8px 5px; /* topbottom leftright */
-    text-transform: uppercase;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    text-align: center;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-}
-
-.wc-body {
-    margin-left: 10px;
-    text-transform: lowercase;
 }
 
 #content,
@@ -85,7 +75,7 @@ p {
     display: none;
 }
 
-.date-card .tooltip {
+.card .tooltip {
     visibility: hidden;
     width: 250px;
     background-color: rgba(0, 0, 0, 0.900);
