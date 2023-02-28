@@ -12,45 +12,6 @@
 
         <div class="top-nav">
             <div class="top-nav-wrapper">
-                <div class="scrolling-wrapper">
-                    <div class="card">
-                      <div class="day-container">
-                        <div class="weekday">Mon</div>
-                        <div class="date">27</div>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="day-container">
-                        <div class="weekday">Sun</div>
-                        <div class="date">26</div>
-                      </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-container">
-                            <div class="day-container">
-                                <div class="weekday">Sat</div>
-                                <div class="date">25</div>
-                            </div>
-                            <div class="wc-body" @click="wcView(wcByDay[week.indexOf(date)].id)">
-                                <p class="words">10 words</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-container">
-                            <div class="day-container">
-                                <div class="weekday">Fri</div>
-                                <div class="date">24</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                      <div class="day-container">
-                        <div class="weekday">Thu</div>
-                        <div class="date">23</div>
-                      </div>
-                    </div>
-                </div>
                 <div id="content">
                     <a href="#modal1"><span class="material-icons">menu</span></button>
 
@@ -69,6 +30,20 @@
                             <p>[[ allWcs ]] words</p><br>
                             <p><a href="{{ user.id }}"><i class="fa-regular fa-pen-to-square"></i> Statistics page</a></p><br>
                             <p><a href="{% url 'logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrolling-wrapper"> <!-- Start of the calendar stuff -->
+                    <div class="card" v-for="date in week"><!-- introduce conditional that will display more data for days with wordcounts attached. -->
+                        <div class="card-container">
+                            <div class="day-container">
+                                <div class="weekday">[[ date.toLocaleDateString("en-US", { weekday: "short"}) ]]</div>
+                                <div class="date">[[ date.toLocaleDateString("en-US", { day: "numeric" }) ]]</div>
+                            </div>
+                            <div  v-if="[[ wcByDay[week.indexOf(date)].todays_wc ]]> 0" class="wc-body" @click="wcView(wcByDay[week.indexOf(date)].id)">
+                                <!-- If there is actual data attached to the retrieved object, then you can hit the button to load it onto the page.-->
+                                <p class="words">[[ wcByDay[week.indexOf(date)].todays_wc ]] words</p>
+                            </div>
                         </div>
                     </div>
                 </div>
