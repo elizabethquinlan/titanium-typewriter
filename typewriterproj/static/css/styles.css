@@ -275,7 +275,7 @@ display: block;
 }
 
 textarea {
-    width: 100%;
+    width: 100vw;
     height: 75vh;
     padding: 12px 20px;
     padding-bottom: 3.4rem;

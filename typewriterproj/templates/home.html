@@ -47,16 +47,16 @@
                         </div>
                     </div>
                 </div>
-           </div>
+            </div>
         </div>
-    
-
+        
+        
         <div class="shell">
             <div class="bar" :style="{ width: [[ calcProgress ]] + '%' }">
                 <span>[[ progress ]]%</span>
             </div>
         </div>
-
+        
         <!-- needs to have an endpoint that is just today's text blob. -->
         <div class="text-field">
             <textarea v-model="textArea" v-on:keyup="countText()" id="user-text" :csrftoken="csrfToken" name="user-text" rows="10" cols="70"></textarea> 
