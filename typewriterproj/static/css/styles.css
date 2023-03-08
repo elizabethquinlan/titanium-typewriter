@@ -325,6 +325,32 @@ select {
     background-color: rgb(21, 28, 38);
 }
 
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    grid-gap: 5px;
+}
+  
+.box {
+    border: 1px solid #ccc;
+    position: relative;
+}
+  
+.dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+  
+.dot--active {
+    background-color: green;
+}
+
 a {
     color: white;
 }

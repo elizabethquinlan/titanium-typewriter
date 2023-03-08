@@ -13,6 +13,12 @@
     Username: {{ user }}<br>
     TOTAL WC: [[ allWcs ]]<br>
 
+    <div class="calendar">
+        <div class="box" v-for="(day, index) in days"> <!--Creates container for calendar-->
+          <span class="dot" :class="{ 'dot--active': day.wordWritten }"></span>
+        </div>
+    </div>
+
     <h1>Projects:</h1>
     <ul v-for="project in projects" >
         <li><h2>[[ project.name ]]</h2></li>
