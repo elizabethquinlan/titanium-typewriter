@@ -21,7 +21,7 @@
 
     <h1>Projects:</h1>
     <ul v-for="project in projects" >
-        <li><h2>[[ project.name ]]</h2></li>
+        <li><h2>Name: [[ project.name ]]</h2></li>
         <li>Started on: [[ project.start_date | formatDateYear ]]</li>
         <li>End date: [[ project.end_date | formatDateYear ]]</li>
         <span v-for="wc in wordcounts" >
