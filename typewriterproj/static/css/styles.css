@@ -47,6 +47,7 @@ p {
 }
 
 .scrolling-wrapper {
+    padding-top: 16px;
     height: 80px;
     margin-bottom: 20px;
     width: 100%;
