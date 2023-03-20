@@ -1,3 +1,19 @@
+Vue.filter('formatDate', function(dateString) {
+    if (dateString) {
+        const options = { month: 'numeric', day: 'numeric', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+    if (!dateString) return ''
+});
+
+Vue.filter('formatDateYear', function(dateString) {
+    if (dateString) {
+        const options = { month: 'long', day: 'numeric', year: 'numeric'};
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+    if (!dateString) return ''
+});
+
 new Vue({
     el: '#app',
     delimiters: ['[[', ']]'],
