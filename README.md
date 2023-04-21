@@ -35,26 +35,26 @@ But this app aims to strike a balance between a clean, minimalist style and one 
 
 **Tasks**
 
-- [ ] Create user input that is stored in database
-- [ ] Keep a running calculation of how many words a user has left that day using function
-- [ ] Store a boolean that determines whether user has completed the word count goal or not
-- [ ] Display to the user the goal and whether it has been completed or not
-- [ ] \(Optional) Display progress bar that tells user how close they are to completing daily goal
+- [X] Create user input that is stored in database
+- [X] Keep a running calculation of how many words a user has left that day using function
+- [X] Store a boolean that determines whether user has completed the word count goal or not
+- [X] Display to the user the goal and whether it has been completed or not
+- [X] \(Optional) Display progress bar that tells user how close they are to completing daily goal
 
 ### Be able to mark the text field with a corresponding project tag and view that project’s progress on its own page
 #### Record that project’s word count daily and overall
 
 **Tasks**
-- [ ] Store project’s word counts (daily and total) in database
+- [X] Store project’s word counts (daily and total) in database
 - [ ] Create view with custom page for that project
 - [ ] Make that page display the project’s total word count and the day’s word count contribution
 
 ### Have custom view for displaying all statistics to user
 
 **Tasks**
-- [ ] Create view for displaying all information to user
+- [X] Create view for displaying all information to user
 - [ ] Parse data for use in a line chart and/or bar graph
-- [ ] Include running list of all word count contributions alongside what day they were made (inspired by [this](https://i.imgur.com/J3NzAWC.jpg)).
+- [X] Include running list of all word count contributions alongside what day they were made (inspired by [this](https://i.imgur.com/J3NzAWC.jpg)).
 
 
 ## Optional Features
@@ -68,8 +68,8 @@ But this app aims to strike a balance between a clean, minimalist style and one 
 ### Add ability to add to word count from outside the app (such as adding a specific word count for writing the user did elsewhere)
 
 **Tasks**
-- [ ] Create input field for word count and optionally what project it corresponds to
-- [ ] Connect that user input to the project data and word count data
+- [X] Create input field for word count and optionally what project it corresponds to
+- [X] Connect that user input to the project data and word count data
 - [ ] Reformat/create function that calculates daily word count/total word count
 
 ### Implement Google Drive API to back up work
@@ -98,20 +98,20 @@ But this app aims to strike a balance between a clean, minimalist style and one 
 ## Schedule
 
 **Thu Jan. 26:** Finish first mvp
-- [ ] Have one view with input and a word count tracking words typed
-- [ ] Track user’s daily word count and total word count
+- [X] Have one view with input and a word count tracking words typed
+- [X] Track user’s daily word count and total word count
 
 ![A screenshot of what a wireframe might look like for this first mvp.](https://i.imgur.com/wsraSxR.png)
 
 **Wed Feb. 1:** Have second mvp working
-- [ ] Be able to input writing goals (daily and set to a specific date)
-- [ ] Display daily word goal counter
-- [ ] Have a view to see progress on word count goals
+- [X] Be able to input writing goals (daily and set to a specific date)
+- [X] Display daily word goal counter
+- [X] Have a view to see progress on word count goals
 
 ![A screenshot of what a wireframe might look like for this first mvp.](https://imgur.com/wizhG8g.png)
 
 **Wed Feb. 8:** Refactor necessary code + add features for third mvp
-- [ ] Add tag functionality for projects
+- [X] Add tag functionality for projects
 - [ ] Have new view for projects (at least to display all projects and their info on one page)
 
 **If time:**
